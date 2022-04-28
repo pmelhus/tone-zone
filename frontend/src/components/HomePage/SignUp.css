@@ -1,0 +1,25 @@
+.sign-up-container {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.sign-in {
+  background: transparent;
+  color: #fff;
+  /* border-color: #ccc; */
+  padding: 2px 15px;
+  height: 30px;
+  line-height: 24px;
+  margin: 0 0 0 6px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 100;
+  text-align: center;
+  transition: opacity .2s linear;
+  }

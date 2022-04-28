@@ -1,0 +1,16 @@
+
+
+
+.container{
+  display: block;
+  /* padding: 0 30px; */
+  margin: 0 auto;
+  width: 1240px;
+}
+
+.top-images-container {
+  display: block;
+  height: 440px;
+  position: relative;
+  border-top: 4px solid #f50;
+}
