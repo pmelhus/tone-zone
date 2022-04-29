@@ -1,0 +1,15 @@
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 50px;
+  display: block;
+    width: 184px;
+    height: 46px;
+    margin: 0;
+    /* text-indent: -999em; */
+}
+
+h1 {
+  font-size: 20px;
+  color: white;
+}
