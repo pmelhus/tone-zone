@@ -1,16 +1,19 @@
 {
-  "name": "tone-zone",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-modal-login": "^2.0.7",
+    "js-cookie": "^3.0.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-redux": "^8.0.1",
     "react-router-dom": "^5.3.1",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "redux-logger": "^3.0.6"
   }
 }
