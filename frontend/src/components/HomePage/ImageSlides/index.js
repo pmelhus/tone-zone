@@ -1,6 +1,6 @@
-import "./ImageCarousel.css";
+import "./ImageSlides.css";
 
-const ImageCarousel = () => {
+const ImageSlides = () => {
   return (
     <div className="image-container">
       <div className="image-carousel">
@@ -18,4 +18,4 @@ const ImageCarousel = () => {
   );
 };
 
-export default ImageCarousel;
+export default ImageSlides;

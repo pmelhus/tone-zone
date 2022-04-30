@@ -1,4 +1,4 @@
-import ImageCarousel from "./ImageCarousel";
+import ImageSlides from "./ImageSlides";
 import TopLogo from "./TopLogo";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp"
@@ -21,7 +21,7 @@ const HomePage = () => {
           <TopLogo />
           <SignIn />
           <SignUp />
-          <ImageCarousel />
+          <ImageSlides />
         </div>
       </div>
     </div>
