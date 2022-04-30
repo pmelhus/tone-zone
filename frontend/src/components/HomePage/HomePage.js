@@ -9,8 +9,11 @@ import { useState } from "react";
 import * as sessionActions from "../../store/session";
 
 const HomePage = () => {
-  const sessionUser = useSelector((state) => state.session.user);
-  if (sessionUser) return <Redirect to="/discover" />;
+
+  // if (sessionUser) {
+  //   return <Redirect to="/discover" />;
+  // } else {
+  // if (!sessionUser) return <Redirect to='/' />
   return (
     <div className="container">
       <div className="main-content">
@@ -23,6 +26,7 @@ const HomePage = () => {
       </div>
     </div>
   );
+
 };
 
 export default HomePage;
