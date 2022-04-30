@@ -15,17 +15,19 @@ function App() {
   const sessionUser = useSelector((state) => state.session.user);
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
       <Switch>
         {!sessionUser && (
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        )}
-        {isLoaded && sessionUser && (
-          <Route isLoaded={isLoaded} path="/discover">
-            <UserHomePage />
+          <Route exact path="/">
+            <HomePage />
           </Route>
+        )}
+        {sessionUser && (
+          <>
+            <Navigation isLoaded={isLoaded} />
+            <Route isLoaded={isLoaded} path="/discover">
+              <UserHomePage />
+            </Route>
+          </>
         )}
       </Switch>
     </>

@@ -1,5 +1,31 @@
-nav {
-  display: flex;
-  justify-content: right;
+header {
+width: 100%;
+height: 46px;
+background: #333;
+transition: height .2s;
+box-sizing: border-box;
 
+}
+
+.nav-div {
+  display: flex;
+  justify-content: center;
+  width: 1240px;
+  margin: 0 auto;
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+}
+
+ul {
+  width: 33%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+a {
+  color: white;
 }
