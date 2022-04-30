@@ -9,7 +9,7 @@
   height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
-  /* transition: opacity .2s linear; */
+  z-index: 1;
 }
 
 .modal {
@@ -18,15 +18,12 @@
   margin-top: 76px;
   height: auto;
   padding: 25px;
-  background: #fff;
   border: 1px solid var(--background-highlight-color);
   border-radius: 0;
   margin: 76px 0 30px;
   position: absolute;
   top: 0;
-  /* transition: transform .3s cubic-bezier(.13,1.07,.5,1.01),visibility 0s,-webkit-transform .3s cubic-bezier(.13,1.07,.5,1.01);
-  transform: translateZ(0); */
-  /* visibility: visible; */
+  z-index: 2;
 }
 
 .modal-content {
@@ -36,50 +33,14 @@
   justify-content: center;
 }
 
-button {
-  width: 100%;
-  margin: 5px;
-}
 
-.auth-separator {
-  font-size: 16px;
-    font-weight: 400;
-    margin: 1em auto;
-    position: relative;
-    text-align: center;
-}
-
-.or-span {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-.or-span::before {
-  left: 0;
-  border-top: 1px solid #333;
-  content: " ";
-  display: inline-block;
-  position: absolute;
-  top: 0.7em;
-  width: 43%;
-}
-
-.or-span::after {
-  right: 0;
-  border-top: 1px solid #333;
-  content: " ";
-  display: inline-block;
-  position: absolute;
-  top: 0.7em;
-  width: 43%;
-}
 
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: -25px;
+
 }
 
 .username-div {
@@ -96,5 +57,5 @@ form {
 }
 
 label {
-  text-align: center;
+  text-align: left;
 }

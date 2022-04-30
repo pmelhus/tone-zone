@@ -1,10 +1,10 @@
-.sign-up-container {
+.sign-in-container {
   position: absolute;
   top: 20px;
-  right: 30px;
+  right: 150px;
 }
 
-.sign-up {
+.sign-in {
   background: transparent;
   color: #fff;
   /* border-color: #ccc; */
@@ -22,5 +22,4 @@
   font-weight: 100;
   text-align: center;
   transition: opacity .2s linear;
-  z-index: 0;
   }

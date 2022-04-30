@@ -1,38 +1,96 @@
-import {useState} from "react"
-import "./LoginModal.css"
+import "./LoginModal.css";
+import React, { useState } from "react";
+import * as sessionActions from "../../store/session";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import "./LoginModal.css";
 
-const LoginModal = ({visible, setVisible}) => {
+const LoginModal = ({ visible, setVisible }) => {
+  const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+  const [credential, setCredential] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState([]);
 
+  if (sessionUser) return <Redirect to="/discover" />;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors([]);
+    return dispatch(sessionActions.login({ credential, password })).catch(
+      async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      }
+    );
+  };
+
+  const demo = (e) => {
+    const credential = 'FakeUser2'
+    const password = 'password3'
+    return dispatch(sessionActions.login({ credential, password })).catch(
+      async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      }
+    );
+  }
 
   const backgroundClick = () => {
-
-    setVisible(!visible)
-
-  }
-  if (!visible) return null
-return (
-  <div className='background-modal' onClick={(e) => {
-    backgroundClick()
-    }}>
-      <div className='modal' onClick={(e) => e.stopPropagation()}>
-        <div className='modal-content'>
-          <div className ='fang-buttons'>
-            <div className ='fb-button'></div>
-              <button type='button'>Continue with Facebook</button>
-            <div className ='google-button'></div>
-              <button>Continue with Google</button>
-            <div className ='apple-button'></div>
-              <button>Continue with Apple</button>
-          <div className='auth-separator'>
-              
-            <span className='or-span'>or</span>
-
+    setVisible(!visible);
+  };
+  if (!visible) return null;
+  return (
+    <div
+      className="background-modal"
+      onClick={(e) => {
+        backgroundClick();
+      }}
+    >
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-content">
+          <div className="fang-buttons">
+            <div className="fb-button"></div>
+            <button type="button">Continue with Facebook</button>
+            <div className="google-button"></div>
+            <button>Continue with Google</button>
+            <div className="apple-button"></div>
+            <button>Continue with Apple</button>
+            <div className="auth-separator">
+              <span className="or-span">or</span>
+            </div>
           </div>
-          </div>
+          <form onSubmit={handleSubmit}>
+            <ul>
+              {errors.map((error, idx) => (
+                <li key={idx}>{error}</li>
+              ))}
+            </ul>
+            <div className="username-div">
+              <label>Username or Email</label>
+              <input
+                type="text"
+                value={credential}
+                onChange={(e) => setCredential(e.target.value)}
+                required
+              />
+            </div>
+            <div className="password-div">
+              <label>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">Log In</button>
+          </form>
+          <button onClick={demo}>Demo Login</button>
         </div>
       </div>
-  </div>
-)
-}
+    </div>
+  );
+};
 
-export default LoginModal
+export default LoginModal;

@@ -1,13 +1,13 @@
 import "./SignUp.css"
 import {useState} from "react"
-import LoginModal from "./LoginModal"
+import SignUpModal from "./SignUpModal"
 
 const SignUp = () => {
-    const [signInToggle, setSignInToggle] = useState(false)
+    const [signUpToggle, setSignUpToggle] = useState(false)
   return(
     <div className='sign-up-container'>
-      <button onClick={()=>setSignInToggle(!signInToggle)}className='sign-in' type="button">Sign In</button>
-      <LoginModal visible={signInToggle} setVisible={setSignInToggle} />
+      <button onClick={()=>setSignUpToggle(!signUpToggle)}className='sign-up' type="button">Sign Up</button>
+      <SignUpModal visible={signUpToggle} setVisible={setSignUpToggle} />
     </div>
   )
 }
