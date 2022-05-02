@@ -1,0 +1,11 @@
+.upload-content {
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px;
+}
+
+form {
+margin: 0 auto;
+}

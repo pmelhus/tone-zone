@@ -21,12 +21,10 @@ function App() {
             <HomePage />
           </Route>
         )}
-        {sessionUser && (
+        {sessionUser && isLoaded && (
           <>
             <Navigation isLoaded={isLoaded} />
-            <Route isLoaded={isLoaded} path="/discover">
-              <UserHomePage />
-            </Route>
+            <UserHomePage />
           </>
         )}
       </Switch>

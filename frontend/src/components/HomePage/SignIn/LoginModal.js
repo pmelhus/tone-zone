@@ -2,7 +2,7 @@ import "./LoginModal.css";
 import React, { useState } from "react";
 import * as sessionActions from "../../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import "./LoginModal.css";
 
 const LoginModal = ({ visible, setVisible }) => {
@@ -12,29 +12,37 @@ const LoginModal = ({ visible, setVisible }) => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
+let history = useHistory()
   if (sessionUser) return <Redirect to="/discover" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).catch(
+    dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       }
-    );
-  };
+      )
+      if (!errors) history.push('/discovery')
 
-  const demo = (e) => {
-    const credential = 'FakeUser2'
-    const password = 'password3'
-    return dispatch(sessionActions.login({ credential, password })).catch(
-      async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+    };
+
+    const demo = (e) => {
+      const credential = 'FakeUser2'
+      const password = 'password3'
+
+      dispatch(sessionActions.login({ credential, password }))
+      .catch(
+        async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors);
+        }
+        )
+        history.push('/discover')
+        // return <Redirect to="/discover"/>
       }
-    );
-  }
+
 
   const backgroundClick = () => {
     setVisible(!visible);

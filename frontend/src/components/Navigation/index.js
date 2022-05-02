@@ -18,13 +18,24 @@ function Navigation({ isLoaded }) {
         <nav>
           <ul>
             <li>
+              <NavLink to='/discover'>
               <a className="home-nav-button">Home</a>
+              </NavLink>
             </li>
             <li>
+              <NavLink to='/stream'>
               <a className='playlist-nav-button'>Stream</a>
+              </NavLink>
             </li>
             <li>
+              <NavLink to='/library'>
               <a className='library-button'>Library</a>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/upload'>
+                <a className='upload-button'>Upload</a>
+              </NavLink>
             </li>
           </ul>
         </nav>

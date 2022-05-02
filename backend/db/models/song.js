@@ -1,0 +1,15 @@
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  const Song = sequelize.define('Song', {
+    playlistId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
+    title: DataTypes.STRING,
+    url: DataTypes.STRING
+  }, {});
+  Song.associate = function(models) {
+    Song.belongsTo(models.User, {foreignKey: 'userId'})
+    Song.belongsTo(models.Playlist, {foreignKey: 'playlistId'})
+    Song.hasMany(models.Comment, {foreignKey:'songId'})
+  };
+  return Song;
+};
