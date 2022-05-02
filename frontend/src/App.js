@@ -24,7 +24,7 @@ function App() {
         {sessionUser && isLoaded && (
           <>
             <Navigation isLoaded={isLoaded} />
-            <UserHomePage />
+            <UserHomePage sessionUser={sessionUser} />
           </>
         )}
       </Switch>

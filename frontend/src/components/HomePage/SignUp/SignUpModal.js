@@ -12,16 +12,22 @@ function SignupFormPage({ visible, setVisible }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [image, setImage] = useState(null)
 
-  if (sessionUser) return <Redirect to="/" />;
+  // if (sessionUser) return <Redirect to="/discover" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(
-        sessionActions.signup({ email, username, password })
-      ).catch(async (res) => {
+    return dispatch(
+        sessionActions.signup({ email, username, password, image })
+      ).then(()=> {
+        setUsername('');
+        setEmail('');
+        setPassword('')
+        setImage(null);
+      }).catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
@@ -29,6 +35,11 @@ function SignupFormPage({ visible, setVisible }) {
     return setErrors([
       "Confirm Password field must be the same as the Password field",
     ]);
+  };
+
+  const updateFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setImage(file);
   };
 
   const backgroundClick = () => {
@@ -87,6 +98,16 @@ function SignupFormPage({ visible, setVisible }) {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
+            <label>
+          <input type="file" onChange={updateFile} />
+        </label>
+        {/* <label>
+            Multiple Upload
+            <input
+              type="file"
+              multiple
+              onChange={updateFiles} />
+          </label> */}
           <button type="submit">Sign Up</button>
         </form>
       </div>

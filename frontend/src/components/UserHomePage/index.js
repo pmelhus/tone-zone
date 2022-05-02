@@ -4,7 +4,7 @@ import Upload from "./Upload"
 import Discover from "./Discover"
 import { Route, Switch } from "react-router-dom";
 
-const UserHomePage = () => {
+const UserHomePage = (sessionUser) => {
   return (
     <div className="user-home-body">
       <Switch>
@@ -15,7 +15,7 @@ const UserHomePage = () => {
           <Songs />
         </Route>
         <Route path='/upload'>
-          <Upload />
+          <Upload sessionUser={sessionUser} />
         </Route>
       </Switch>
     </div>

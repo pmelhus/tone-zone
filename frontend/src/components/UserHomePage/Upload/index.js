@@ -1,51 +1,51 @@
 import "./Upload.css";
 import { useDispatch } from "react-redux";
-import { useState, useRef } from "react";
-import {useHistory} from "react-router-dom"
-import {ValidationError} from "../../../utils/validationError"
-import ErrorMessage from '../../ErrorMessage';
-import {createSong} from "../../../store/song"
-import S3 from "react-aws-s3"
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { ValidationError } from "../../../utils/validationError";
+import ErrorMessage from "../../ErrorMessage";
+import * as songActions from "../../../store/song";
 
-const Upload = () => {
+const Upload = (sessionUser) => {
   const [title, setTitle] = useState("");
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const [errorMessages, setErrorMessages] = useState({});
-  const [selectedFile, setSelectedFile] = useState(null);
-
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [errors, setErrors] = useState([]);
+  const [audio, setAudio] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
   const updateTitle = (e) => setTitle(e.target.value);
 
-
-
   const onSubmit = (e) => {
     e.preventDefault();
-
+const userId = sessionUser.sessionUser.sessionUser.id
+console.log(sessionUser.sessionUser.sessionUser.id)
     const payload = {
-      title
+      userId,
+      title,
+      audio
     };
-    let createdSong;
-    try {
-      createdSong = dispatch(createSong(payload));
-    } catch (error) {
-      if (error instanceof ValidationError) setErrorMessages(error.errors);
-      // If error is not a ValidationError, add slice at the end to remove extra
-      // "Error: "
-      else setErrorMessages({ overall: error.toString().slice(7) })
-    }
-    //!!END
-    if (createdSong) {
-      //!!START SILENT
-      setErrorMessages({});
-      //!!END
-      history.push(`/discovery`);
-    }
+
+    return dispatch(songActions.createSong(payload))
+      .then(() => {
+        setTitle("");
+        setAudio(null);
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      })
+      .then(history.push(`/discovery`));
   };
 
+  //!!END
 
-// const fileInput = useRef()
+  const updateFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setAudio(file);
+  };
 
+  // const fileInput = useRef()
 
   return (
     <div className="upload-content">
@@ -57,8 +57,9 @@ const Upload = () => {
           type="file"
           name="song-upload"
           accept="audio/*"
+          onChange={updateFile}
         ></input>
-        <button type='submit'>Submit</button>
+        <button>Submit</button>
       </form>
     </div>
   );

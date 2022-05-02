@@ -14,7 +14,8 @@ module.exports = {
       },
       playlistId: {
         type: Sequelize.INTEGER,
-        references: {model:"Playlists"}
+        references: {model:"Playlists"},
+        allowNull: true
       },
       url: {
         type: Sequelize.STRING

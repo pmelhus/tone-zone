@@ -11,5 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     Song.belongsTo(models.Playlist, {foreignKey: 'playlistId'})
     Song.hasMany(models.Comment, {foreignKey:'songId'})
   };
+
+  Song.upload = async function({userId, title, url}) {
+    const song = await Song.create({
+      userId, title, url
+    })
+    return Song.findByPk(song.id)
+  }
+
   return Song;
 };
