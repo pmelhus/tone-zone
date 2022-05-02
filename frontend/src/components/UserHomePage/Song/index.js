@@ -1,11 +1,11 @@
 import "react-h5-audio-player/lib/styles.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { getAllSongs } from "../../../store/song";
+import { useState, useEffect} from "react";
+import { getOneSong } from "../../../store/song";
 import AudioPlayer from "react-h5-audio-player";
-import { Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 
-const Songs = () => {
+const Song = () => {
   // const Player = () => (
   // <AudioPlayer
   //   autoPlay
@@ -15,21 +15,18 @@ const Songs = () => {
   // />;
   // );
   const dispatch = useDispatch();
-  const songList = useSelector((state) => Object.values(state.song));
-
+  const {songId} = useParams()
+  const song = useSelector((state)=> state.song[songId])
+console.log(`=============${song}`)
   useEffect(() => {
-    dispatch(getAllSongs());
+    dispatch(getOneSong(songId));
   }, [dispatch]);
 
   return (
-    <div>
-      {songList &&
-        songList.map((song) => {
-          return (
+
             <div>
               <h2>
-                <Link to={`/stream/${song.id}`}>{song.title}</Link>
-                <span> </span>by {song.User?.username}
+              {song.User?.username}
               </h2>
               <AudioPlayer
                 src={song.url}
@@ -38,9 +35,6 @@ const Songs = () => {
               />
             </div>
           );
-        })}
-    </div>
-  );
-};
+  }
 
-export default Songs;
+export default Song;

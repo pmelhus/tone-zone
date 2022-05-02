@@ -4,17 +4,32 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { singleMulterUpload, singlePublicFileUpload } = require("../../awsS3");
 
-const { Song } = require("../../db/models");
+const { Song, User } = require("../../db/models");
 
 const router = express.Router();
 
 router.get(
   "/",
   asyncHandler(async function (req, res) {
-    const allSongs = await songs.findAll();
+    const allSongs = await Song.findAll({
+      include: User
+  });
+
     return res.json(allSongs);
   })
 );
+
+router.get(
+  '/:id',
+  asyncHandler(async function (req, res) {
+    const {id} = req.params
+    console.log(id)
+    const song = await Song.findByPk(id, {
+      include: User
+    })
+    return res.json(song)
+  })
+)
 
 router.post(
   "/",
@@ -22,7 +37,7 @@ router.post(
   asyncHandler(async (req, res) => {
     const { userId, title } = req.body;
     const url= await singlePublicFileUpload(req.file);
-    console.log(url)
+    // console.log(url)
     const song = await Song.upload({
       userId,
       title,
@@ -33,5 +48,14 @@ router.post(
     });
   })
 );
+
+
+
+// router.delete(
+//   '/',
+//   asyncHandler(async (req,res) => {
+//     const song = await Song.findByPk({})
+//   })
+// )
 
 module.exports = router;

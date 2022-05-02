@@ -2,27 +2,42 @@ import { ValidationError } from "../utils/validationError";
 import { csrfFetch } from "./csrf";
 
 const ADD_ONE = "songs/ADD_ONE";
-
 const LOAD = "songs/LOAD";
+
 
 const addOneSong = (song) => ({
   type: ADD_ONE,
   song,
 });
 
-const load = (list) => ({
+const getSongs = (songs) => ({
   type: LOAD,
-  list,
-});
+  songs
+})
 
-export const getSongs = () => async (dispatch) => {
-  const response = await fetch(`/api/songs`);
+
+export const getAllSongs = () => async (dispatch) => {
+  const res = await fetch('/api/songs')
+  if (res.ok) {
+  const data = await res.json()
+  console.log(data)
+    dispatch(getSongs(data))
+  } else {
+    throw res
+  }
+}
+
+export const getOneSong = id => async dispatch => {
+  const response = await fetch(`/api/songs/${id}`);
 
   if (response.ok) {
-    const list = await response.json();
-    dispatch(load(list));
+    console.log(response)
+    const song = await response.json();
+    dispatch(addOneSong(song));
   }
 };
+
+
 
 export const createSong = (song) => async (dispatch) => {
   const { userId, title, audio } = song;
@@ -70,6 +85,12 @@ const initialState = {
   types: [],
 };
 
+// const sortList = (list) => {
+//   return list.sort((songA, songB) => {
+//     return songA.id - songB.id;
+//   }).map((song) => song.id);
+// };
+
 const songReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ONE:
@@ -82,6 +103,13 @@ const songReducer = (state = initialState, action) => {
         songList.push(action.song);
         // newState.list = sortList(pokemonList);
         return newState;
+      }
+      case LOAD: {
+        if(action.songs) {
+        const newState = {};
+        action.songs.forEach((song) => (newState[song.id] = song))
+        return newState
+        }
       }
     default:
       return state;

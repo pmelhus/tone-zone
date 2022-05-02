@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       userId, title, url
     })
     return Song.findByPk(song.id)
-  }
+  };
 
   return Song;
 };
