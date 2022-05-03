@@ -33,7 +33,7 @@ const Song = () => {
                 onPlay={(e) => console.log("onPlay")}
                 // other props here
               />
-              <EditModal title={song.title} description={description} visible={signInToggle} setVisible={setSignInToggle} />
+              <EditModal title={song.title} description={song.description} visible={signInToggle} setVisible={setSignInToggle} />
             </div>
           );
   }
