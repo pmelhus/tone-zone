@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ValidationError } from "../../../utils/validationError";
 import ErrorMessage from "../../ErrorMessage";
-import * as songActions from "../../../store/song";
+import * as songActions from "../../../store/songs";
 
 const Upload = (sessionUser) => {
   const [title, setTitle] = useState("");

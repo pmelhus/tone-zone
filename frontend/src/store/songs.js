@@ -3,30 +3,37 @@ import { csrfFetch } from "./csrf";
 
 const ADD_ONE = "songs/ADD_ONE";
 const LOAD = "songs/LOAD";
-const UPDATE = 'songs/UPDATE'
-const DELETE = 'songs/DELETE'
+const UPDATE = "songs/UPDATE";
+const DELETE = "songs/DELETE";
+const GET_ONE = "songs/GET_ONE";
 
 const addOneSong = (song) => ({
   type: ADD_ONE,
   song,
 });
 
+const getOne = (song) => ({
+  type: GET_ONE,
+  song,
+});
+
 const getSongs = (songs) => ({
   type: LOAD,
-  songs
+  songs,
 });
 
 const update = (song) => ({
   type: UPDATE,
-  song
-})
+  song,
+});
 
-const deleteSong= (song) => ({
+const deleteSong = (song) => ({
   type: DELETE,
   song
-})
+});
 
 export const getAllSongs = () => async (dispatch) => {
+  // console.log('================')
   const res = await fetch("/api/songs");
   if (res.ok) {
     const songs = await res.json();
@@ -41,11 +48,11 @@ export const getAllSongs = () => async (dispatch) => {
 export const getOneSong = (id) => async (dispatch) => {
   const response = await fetch(`/api/songs/${id}`);
 
-  if (response.ok) {
-    console.log(response);
-    const song = await response.json();
-    dispatch(addOneSong(song));
-  }
+  const song = await response.json();
+
+  // console.log('===================')
+  // console.log(song)
+  dispatch(getOne(song));
 };
 
 export const createSong = (song) => async (dispatch) => {
@@ -91,40 +98,35 @@ export const createSong = (song) => async (dispatch) => {
   }
 };
 
-export const updateSong = data => async dispatch => {
+export const updateSong = (data) => async (dispatch) => {
+  const response = await csrfFetch(`/api/songs/${data.songId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const song = await response.json();
+  dispatch(update(song));
+  return song;
+};
 
-
-    const response = await csrfFetch(`/api/songs/${data.songId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    });
-    const song = await response.json();
-    dispatch(update(song))
-    return song
-
-}
-
-export const deleteOneSong = data => async dispatch => {
+export const deleteOneSong = (data) => async (dispatch) => {
+  console.log("============");
   const response = await csrfFetch(`/api/songs/${data.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data)
-  })
-  const song = await response.json()
-  dispatch(deleteSong(song))
-}
+    body: JSON.stringify(data),
+  });
 
-
-const initialState = {
-// songs: []
+  const song = await response.json();
+console.log('SONG', song)
+  dispatch(deleteSong(song));
 };
 
-
+const initialState = {};
 
 // const sortList = (list) => {
 //   return list.sort((songA, songB) => {
@@ -134,45 +136,50 @@ const initialState = {
 
 const songReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD:
-        const newState = {...state}
-        action.songs.forEach((song) => (newState[song.id] = song));
-        return newState
-
-    case ADD_ONE:
+    case LOAD: {
+      const newState = { ...state };
+      action.songs.forEach((song) => (newState[song.id] = song));
+      return newState;
+    }
+    case ADD_ONE: {
       if (!state[action.song.id]) {
-
         const newState = {
           ...state,
-          [action.song.id]: action.song.song
+          [action.song.song.id]: action.song.song,
         };
-
         // const songList = newState.songs.map((song) => newState[song.id]);
         // songList.push(action.song);
         // newState.list = sortList(pokemonList);
-        // console.log(newState)
-        // newState = songList
         return newState;
-
+      }
     }
-    case UPDATE:
-      {
-        const newState = {...state}
-        const newStateObj = Object.values(newState)
-       const song = newStateObj.find(object => object.id === action.song.id)
+    case GET_ONE: {
+      const newState = { ...state, [action.song.id]: action.song };
 
-        song.title = action.song.title
-        song.description = action.song.description
-        return newState
-      }
-      case DELETE:
-      {
-        let newState = {...state}
-        const newStateObj = Object.values(newState)
-     newStateObj.filter(object => object.id !== action.song.id)
-        newState = {...newStateObj}
-        return newState
-      }
+      return newState;
+      // const newState = {...state}
+      // console.log(newState)
+    }
+    case UPDATE: {
+      let newState = { ...state };
+      let newStateObj = Object.values(newState);
+      const song = newStateObj.find((object) => object.id === action.song.id);
+
+      song.title = action.song.title;
+      song.description = action.song.description;
+      
+      return newState;
+    }
+
+    case DELETE: {
+      console.log(state);
+      console.log('=============>', action.song)
+      // const newSong = state.id.filter(song=>{song.id !== action.song.id})
+      delete state[action.song.id]
+      const newState = { ...state };
+console.log(state)
+      return newState;
+    }
     default:
       return state;
   }

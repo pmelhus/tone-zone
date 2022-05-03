@@ -26,6 +26,7 @@ router.get(
     const song = await Song.findByPk(id, {
       include: User,
     });
+
     return res.json(song);
   })
 );
@@ -72,8 +73,8 @@ router.delete(
   asyncHandler(async (req,res) => {
     const id = req.params.id
     const song = await Song.findByPk(id)
-   const deletedSong = await song.destroy()
-   return res.json(deletedSong)
+  await song.destroy()
+   return res.json(song)
   })
 )
 

@@ -1,7 +1,7 @@
 import "react-h5-audio-player/lib/styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { getAllSongs } from "../../../store/song";
+import { getAllSongs } from "../../../store/songs";
 import AudioPlayer from "react-h5-audio-player";
 import { Link } from "react-router-dom";
 
@@ -15,8 +15,8 @@ const Songs = () => {
   // />;
   // );
   const dispatch = useDispatch();
-  const songList = useSelector((state) => Object.values(state.song));
-  console.log(songList)
+  const songList = useSelector((state) => Object.values(state.songs));
+
 
   useEffect(() => {
     dispatch(getAllSongs());
