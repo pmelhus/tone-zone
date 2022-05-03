@@ -17,7 +17,6 @@ const Song = () => {
   const dispatch = useDispatch();
   const {songId} = useParams()
   const song = useSelector((state)=> state.song[songId])
-console.log(`=============${song}`)
   useEffect(() => {
     dispatch(getOneSong(songId));
   }, [dispatch]);
@@ -26,7 +25,7 @@ console.log(`=============${song}`)
 
             <div>
               <h2>
-              {song.User?.username}
+              {song.title} by {song.User?.username}
               </h2>
               <AudioPlayer
                 src={song.url}

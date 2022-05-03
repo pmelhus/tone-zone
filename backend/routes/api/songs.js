@@ -49,6 +49,24 @@ router.post(
   })
 );
 
+// router.put(
+//   '/:id',
+//   asyncHandler(async function(req, res) {
+//     const {id} = req.params
+//     const reqTitle = req.body.title
+//     const reqDescription = req.body.description
+//     const song = await Song.findByPk(id, {
+//       include: User
+//     })
+//     const editedSong = Song.update(
+//       {title:reqTitle,
+//       description:reqDescription}
+//     )
+//     res.json(editedSong)
+//     console.log(res.json(editedSong))
+//   })
+// )
+
 
 
 // router.delete(

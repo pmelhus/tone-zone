@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     playlistId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     title: DataTypes.STRING,
+    description: DataTypes.STRING,
     url: DataTypes.STRING
   }, {});
   Song.associate = function(models) {
