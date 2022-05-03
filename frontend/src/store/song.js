@@ -4,7 +4,6 @@ import { csrfFetch } from "./csrf";
 const ADD_ONE = "songs/ADD_ONE";
 const LOAD = "songs/LOAD";
 
-
 const addOneSong = (song) => ({
   type: ADD_ONE,
   song,
@@ -13,37 +12,36 @@ const addOneSong = (song) => ({
 const getSongs = (songs) => ({
   type: LOAD,
   songs
-})
-
+});
 
 export const getAllSongs = () => async (dispatch) => {
-  const res = await fetch('/api/songs')
+  const res = await fetch("/api/songs");
   if (res.ok) {
-  const data = await res.json()
-  console.log(data)
-    dispatch(getSongs(data))
+    const songs = await res.json();
+    // console.log(list)
+    // console.log(data)
+    dispatch(getSongs(songs));
   } else {
-    throw res
+    throw res;
   }
-}
+};
 
-export const getOneSong = id => async dispatch => {
+export const getOneSong = (id) => async (dispatch) => {
   const response = await fetch(`/api/songs/${id}`);
 
   if (response.ok) {
-    console.log(response)
+    console.log(response);
     const song = await response.json();
     dispatch(addOneSong(song));
   }
 };
 
-
-
 export const createSong = (song) => async (dispatch) => {
-  const { userId, title, audio } = song;
+  const { userId, title, description, audio } = song;
   const formData = new FormData();
-  formData.append('userId', userId)
+  formData.append("userId", userId);
   formData.append("title", title);
+  formData.append("description", description);
   if (audio) formData.append("audio", audio);
   try {
     const response = await csrfFetch(`/api/songs/`, {
@@ -74,6 +72,7 @@ export const createSong = (song) => async (dispatch) => {
     }
 
     const song = await response.json();
+
     dispatch(addOneSong(song));
   } catch (error) {
     throw error;
@@ -81,8 +80,7 @@ export const createSong = (song) => async (dispatch) => {
 };
 
 const initialState = {
-  list: [],
-  types: [],
+// songs: []
 };
 
 // const sortList = (list) => {
@@ -93,24 +91,27 @@ const initialState = {
 
 const songReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOAD:
+        const newState = {...state}
+        action.songs.forEach((song) => (newState[song.id] = song));
+        return newState
+
     case ADD_ONE:
       if (!state[action.song.id]) {
+        console.log(state + '=================')
         const newState = {
           ...state,
-          [action.song.id]: action.song,
+          [action.song.id]: action.song.song
         };
-        const songList = newState.list.map((id) => newState[id]);
-        songList.push(action.song);
+        console.log('=============' + newState)
+        // const songList = newState.songs.map((song) => newState[song.id]);
+        // songList.push(action.song);
         // newState.list = sortList(pokemonList);
+        // console.log(newState)
+        // newState = songList
         return newState;
-      }
-      case LOAD: {
-        if(action.songs) {
-        const newState = {};
-        action.songs.forEach((song) => (newState[song.id] = song))
-        return newState
-        }
-      }
+
+    }
     default:
       return state;
   }

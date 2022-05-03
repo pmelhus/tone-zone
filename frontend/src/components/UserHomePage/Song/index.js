@@ -4,7 +4,7 @@ import { useState, useEffect} from "react";
 import { getOneSong } from "../../../store/song";
 import AudioPlayer from "react-h5-audio-player";
 import { Link, useParams} from "react-router-dom";
-
+import EditModal from "./EditModal/EditModal"
 const Song = () => {
   // const Player = () => (
   // <AudioPlayer
@@ -14,6 +14,7 @@ const Song = () => {
   //   // other props here
   // />;
   // );
+  const [signInToggle, setSignInToggle] = useState(false)
   const dispatch = useDispatch();
   const {songId} = useParams()
   const song = useSelector((state)=> state.song[songId])
@@ -32,6 +33,7 @@ const Song = () => {
                 onPlay={(e) => console.log("onPlay")}
                 // other props here
               />
+              <EditModal title={song.title} description={description} visible={signInToggle} setVisible={setSignInToggle} />
             </div>
           );
   }

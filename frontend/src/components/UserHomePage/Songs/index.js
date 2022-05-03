@@ -16,21 +16,26 @@ const Songs = () => {
   // );
   const dispatch = useDispatch();
   const songList = useSelector((state) => Object.values(state.song));
+  console.log(songList)
 
   useEffect(() => {
     dispatch(getAllSongs());
   }, [dispatch]);
 
+
+
   return (
     <div>
-      {songList &&
-        songList.map((song) => {
+      {songList && songList.map((song) => {
           return (
             <div>
               <h2>
                 <Link to={`/stream/${song.id}`}>{song.title}</Link>
                 <span> </span>by {song.User?.username}
               </h2>
+              <p>
+                {song.description}
+              </p>
               <AudioPlayer
                 src={song.url}
                 onPlay={(e) => console.log("onPlay")}

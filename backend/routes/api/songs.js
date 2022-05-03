@@ -12,6 +12,7 @@ router.get(
   "/",
   asyncHandler(async function (req, res) {
     const allSongs = await Song.findAll({
+
       include: User
   });
 
@@ -23,7 +24,6 @@ router.get(
   '/:id',
   asyncHandler(async function (req, res) {
     const {id} = req.params
-    console.log(id)
     const song = await Song.findByPk(id, {
       include: User
     })
@@ -35,12 +35,13 @@ router.post(
   "/",
   singleMulterUpload("audio"),
   asyncHandler(async (req, res) => {
-    const { userId, title } = req.body;
+    const { userId, title, description } = req.body;
     const url= await singlePublicFileUpload(req.file);
     // console.log(url)
     const song = await Song.upload({
       userId,
       title,
+      description,
       url
     });
     return res.json({
@@ -49,23 +50,23 @@ router.post(
   })
 );
 
-// router.put(
-//   '/:id',
-//   asyncHandler(async function(req, res) {
-//     const {id} = req.params
-//     const reqTitle = req.body.title
-//     const reqDescription = req.body.description
-//     const song = await Song.findByPk(id, {
-//       include: User
-//     })
-//     const editedSong = Song.update(
-//       {title:reqTitle,
-//       description:reqDescription}
-//     )
-//     res.json(editedSong)
-//     console.log(res.json(editedSong))
-//   })
-// )
+router.put(
+  '/:id',
+  asyncHandler(async function(req, res) {
+    const {id} = req.params
+    const reqTitle = req.body.title
+    const reqDescription = req.body.description
+    const song = await Song.findByPk(id, {
+      include: User
+    })
+    const editedSong = Song.update(
+      {title:reqTitle,
+      description:reqDescription}
+    )
+    res.json(editedSong)
+    console.log(res.json(editedSong))
+  })
+)
 
 
 
