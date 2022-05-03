@@ -20,9 +20,9 @@ useEffect(() => {
 
 const song = useSelector((state) => (state.songs[songId]));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    dispatch(deleteOneSong(song)).then(
+   await dispatch(deleteOneSong(song)).then(
       history.push('/stream')
     )
   }

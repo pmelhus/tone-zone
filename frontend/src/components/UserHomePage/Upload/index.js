@@ -35,7 +35,7 @@ const userId = sessionUser.sessionUser.sessionUser.id
         setDescription('');
         setAudio(null);
       })
-      .then(history.push(`/stream`));
+      .then(history.push(`/stream`)).then(()=> {songActions.getAllSongs()});
   };
 
   //!!END

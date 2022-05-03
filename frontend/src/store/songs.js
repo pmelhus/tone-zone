@@ -7,9 +7,9 @@ const UPDATE = "songs/UPDATE";
 const DELETE = "songs/DELETE";
 const GET_ONE = "songs/GET_ONE";
 
-const addOneSong = (song) => ({
+const addOneSong = (song, user) => ({
   type: ADD_ONE,
-  song,
+  song, user
 });
 
 const getOne = (song) => ({
@@ -69,6 +69,7 @@ export const createSong = (song) => async (dispatch) => {
         "Content-Type": "multipart/form-data",
       },
       body: formData,
+
     });
     if (!response.ok) {
       let error;
@@ -91,8 +92,8 @@ export const createSong = (song) => async (dispatch) => {
     }
 
     const song = await response.json();
-
-    dispatch(addOneSong(song));
+    console.log("=================", song)
+    dispatch(addOneSong(song, song.user));
   } catch (error) {
     throw error;
   }
@@ -143,10 +144,13 @@ const songReducer = (state = initialState, action) => {
     }
     case ADD_ONE: {
       if (!state[action.song.id]) {
+        // console.log(action.user)
         const newState = {
           ...state,
-          [action.song.song.id]: action.song.song,
+          [action.song.song.id]: {...action.song.song, User: action.user}
+
         };
+
         // const songList = newState.songs.map((song) => newState[song.id]);
         // songList.push(action.song);
         // newState.list = sortList(pokemonList);
@@ -167,7 +171,7 @@ const songReducer = (state = initialState, action) => {
 
       song.title = action.song.title;
       song.description = action.song.description;
-      
+
       return newState;
     }
 

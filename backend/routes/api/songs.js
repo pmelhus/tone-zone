@@ -26,7 +26,6 @@ router.get(
     const song = await Song.findByPk(id, {
       include: User,
     });
-
     return res.json(song);
   })
 );
@@ -36,7 +35,9 @@ router.post(
   singleMulterUpload("audio"),
   asyncHandler(async (req, res) => {
     const { userId, title, description } = req.body;
+    // console.log(req.body);
     const url = await singlePublicFileUpload(req.file);
+    const user = await User.findByPk(userId);
     // console.log(url)
     const song = await Song.upload({
       userId,
@@ -46,6 +47,7 @@ router.post(
     });
     return res.json({
       song,
+      user,
     });
   })
 );
@@ -53,29 +55,30 @@ router.post(
 router.put(
   "/:id",
   asyncHandler(async function (req, res) {
-// console.log(req.body)
-const id = req.body.songId
+    // console.log(req.body)
+    const id = req.body.songId;
     const reqTitle = req.body.title;
     const reqDescription = req.body.description;
     const song = await Song.findByPk(id);
     // console.log(song)
     // delete id;
-    const editedSong = await song.update(
-      {title:reqTitle, description:reqDescription},
-    );
+    const editedSong = await song.update({
+      title: reqTitle,
+      description: reqDescription,
+    });
 
     return res.json(editedSong);
   })
 );
 
 router.delete(
-  '/:id',
-  asyncHandler(async (req,res) => {
-    const id = req.params.id
-    const song = await Song.findByPk(id)
-  await song.destroy()
-   return res.json(song)
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const song = await Song.findByPk(id);
+    await song.destroy();
+    return res.json(song);
   })
-)
+);
 
 module.exports = router;
