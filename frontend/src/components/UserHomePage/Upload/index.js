@@ -4,38 +4,38 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ValidationError } from "../../../utils/validationError";
 import ErrorMessage from "../../ErrorMessage";
-import * as songActions from "../../../store/song";
+import * as songActions from "../../../store/songs";
 
 const Upload = (sessionUser) => {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState('')
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState([]);
   const [audio, setAudio] = useState(null);
   // const [selectedFile, setSelectedFile] = useState(null);
-
+const updateDescription = (e) => setDescription(e.target.value)
   const updateTitle = (e) => setTitle(e.target.value);
 
   const onSubmit = (e) => {
     e.preventDefault();
 const userId = sessionUser.sessionUser.sessionUser.id
-console.log(sessionUser.sessionUser.sessionUser.id)
+// console.log(sessionUser.sessionUser.sessionUser.id)
     const payload = {
       userId,
       title,
+      description,
       audio
     };
+    console.log(payload)
 
     return dispatch(songActions.createSong(payload))
       .then(() => {
         setTitle("");
+        setDescription('');
         setAudio(null);
       })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      })
-      .then(history.push(`/discovery`));
+      .then(history.push(`/stream`));
   };
 
   //!!END
@@ -52,6 +52,8 @@ console.log(sessionUser.sessionUser.sessionUser.id)
       <form onSubmit={onSubmit}>
         <label for="song-name">Title:</label>
         <input name="song-name" value={title} onChange={updateTitle}></input>
+        <label for="song-name">Description:</label>
+        <input name="song-name" value={description} onChange={updateDescription}></input>
         <label for="song-upload">Upload your song:</label>
         <input
           type="file"

@@ -12,14 +12,15 @@ const UserHomePage = (sessionUser) => {
         <Route path='/discover'>
           <Discover />
         </Route>
+        <Route path='/stream/:songId'>
+        
+          <Song />
+        </Route>
         <Route exact path='/stream'>
           <Songs />
         </Route>
         <Route path='/upload'>
           <Upload sessionUser={sessionUser} />
-        </Route>
-        <Route path='/stream/:songId'>
-          <Song />
         </Route>
       </Switch>
     </div>

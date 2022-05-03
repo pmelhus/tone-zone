@@ -12,7 +12,7 @@ const LoginModal = ({ visible, setVisible }) => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-let history = useHistory()
+  let history = useHistory();
   if (sessionUser) return <Redirect to="/discover" />;
 
   const handleSubmit = (e) => {
@@ -23,26 +23,23 @@ let history = useHistory()
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       }
-      )
-      if (!errors) history.push('/discovery')
+    );
+    if (!errors) history.push("/discovery");
+  };
 
-    };
+  const demo = (e) => {
+    const credential = "FakeUser2";
+    const password = "password3";
 
-    const demo = (e) => {
-      const credential = 'FakeUser2'
-      const password = 'password3'
-
-      dispatch(sessionActions.login({ credential, password }))
-      .catch(
-        async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        }
-        )
-        history.push('/discover')
-        // return <Redirect to="/discover"/>
+    dispatch(sessionActions.login({ credential, password })).catch(
+      async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
       }
-
+    );
+    history.push("/discover");
+    // return <Redirect to="/discover"/>
+  };
 
   const backgroundClick = () => {
     setVisible(!visible);
