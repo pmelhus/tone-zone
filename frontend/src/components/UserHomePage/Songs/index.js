@@ -7,15 +7,16 @@ import { Link } from "react-router-dom";
 import CommentCard from "./CommentCard";
 import "./Songs.css"
 
-const Songs = () => {
+
+const Songs = ({sessionUser}) => {
   const dispatch = useDispatch();
   const songList = useSelector((state) => Object.values(state.songs));
 
   useEffect(() => {
-    dispatch(getAllSongs());
+    dispatch(getAllSongs())
   }, [dispatch]);
 
-  console.log(songList);
+
 
   const handleSubmit = async (e, song) => {
     e.preventDefault();
@@ -39,7 +40,8 @@ const Songs = () => {
                 onPlay={(e) => console.log("onPlay")}
                 // other props here
               />
-              <CommentCard className='comment-card' />
+
+              <CommentCard song={song} sessionUser={sessionUser} className='comment-card' />
               <form
                 onSubmit={(e) => {
                   handleSubmit(e, song);

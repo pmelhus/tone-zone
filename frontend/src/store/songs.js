@@ -9,7 +9,8 @@ const GET_ONE = "songs/GET_ONE";
 
 const addOneSong = (song, user) => ({
   type: ADD_ONE,
-  song, user
+  song,
+  user,
 });
 
 const getOne = (song) => ({
@@ -29,7 +30,7 @@ const update = (song) => ({
 
 const deleteSong = (song) => ({
   type: DELETE,
-  song
+  song,
 });
 
 export const getAllSongs = () => async (dispatch) => {
@@ -69,7 +70,6 @@ export const createSong = (song) => async (dispatch) => {
         "Content-Type": "multipart/form-data",
       },
       body: formData,
-
     });
     if (!response.ok) {
       let error;
@@ -92,7 +92,6 @@ export const createSong = (song) => async (dispatch) => {
     }
 
     const song = await response.json();
-    console.log("=================", song)
     dispatch(addOneSong(song, song.user));
   } catch (error) {
     throw error;
@@ -113,7 +112,7 @@ export const updateSong = (data) => async (dispatch) => {
 };
 
 export const deleteOneSong = (data) => async (dispatch) => {
-  console.log("============");
+
   const response = await csrfFetch(`/api/songs/${data.id}`, {
     method: "DELETE",
     headers: {
@@ -123,7 +122,7 @@ export const deleteOneSong = (data) => async (dispatch) => {
   });
 
   const song = await response.json();
-console.log('SONG', song)
+  
   dispatch(deleteSong(song));
 };
 
@@ -147,8 +146,7 @@ const songReducer = (state = initialState, action) => {
         // console.log(action.user)
         const newState = {
           ...state,
-          [action.song.song.id]: {...action.song.song, User: action.user}
-
+          [action.song.song.id]: { ...action.song.song, User: action.user },
         };
 
         // const songList = newState.songs.map((song) => newState[song.id]);
@@ -161,8 +159,6 @@ const songReducer = (state = initialState, action) => {
       const newState = { ...state, [action.song.id]: action.song };
 
       return newState;
-      // const newState = {...state}
-      // console.log(newState)
     }
     case UPDATE: {
       let newState = { ...state };
@@ -176,12 +172,8 @@ const songReducer = (state = initialState, action) => {
     }
 
     case DELETE: {
-      console.log(state);
-      console.log('=============>', action.song)
-      // const newSong = state.id.filter(song=>{song.id !== action.song.id})
-      delete state[action.song.id]
+      delete state[action.song.id];
       const newState = { ...state };
-console.log(state)
       return newState;
     }
     default:

@@ -2,7 +2,7 @@
   /* display: flex;
   justify-content: center;
   box-shadow: 2px 2px 3px 1px rgb(104, 45, 7); */
-  height: 800px;
+  height: auto;
 }
 
 .song-card {
@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 300px;
+  height: auto;
   box-shadow: 2px 2px 3px 1px rgb(104, 45, 7);
 }
 
