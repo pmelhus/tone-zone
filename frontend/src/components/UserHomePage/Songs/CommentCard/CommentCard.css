@@ -1,0 +1,7 @@
+.comment-body {
+  height: 120px;
+  overflow-y: scroll;
+  position: relative;
+ 
+  bottom: 30px;
+}

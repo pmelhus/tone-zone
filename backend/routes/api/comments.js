@@ -28,4 +28,22 @@ router.get(
   })
 )
 
+router.put(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    console.log(req.body)
+
+    const commentId = req.body.comment.id
+    const reqBody = req.body.body
+    const comment = await Comment.findByPk(commentId);
+    // console.log(song)
+    // delete id;
+    const editedSong = await comment.update({
+      body: reqBody
+    });
+
+    return res.json(editedSong);
+  })
+);
+
 module.exports = router

@@ -16,6 +16,11 @@ const getComments = (comments) => ({
   comments
 })
 
+const update = (comment) => ({
+  type: UPDATE,
+  comment
+})
+
 export const createComment = (comment) => async (dispatch) => {
   try {
     const response = await csrfFetch(`/api/comments/`, {
@@ -63,6 +68,19 @@ export const getAllComments = () => async (dispatch) => {
   } else {
     throw res;
   }
+};
+
+export const updateComment = (data) => async (dispatch) => {
+  const response = await csrfFetch(`/api/comments/${data.comment.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const comment = await response.json();
+  dispatch(update(comment));
+  return comment;
 };
 
 const initialState = {}
