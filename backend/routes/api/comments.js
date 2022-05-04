@@ -4,12 +4,13 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { singleMulterUpload, singlePublicFileUpload } = require("../../awsS3");
 
-const { Song, User } = require("../../db/models");
+const { Song, User, Comment } = require("../../db/models");
 
 const router = express.Router();
 
 router.post(
-  "/", asyncHandler(async (req, res) => {
+  "/", asyncHandler( async (req, res) => {
+
     const {userId, songId, body} = req.body;
     const comment = await Comment.create({
       userId, songId, body
@@ -17,3 +18,14 @@ router.post(
     return res.json(comment)
   })
 )
+
+router.get(
+  "/", asyncHandler(async (req, res)=> {
+    const allComments = await Comment.findAll({
+      include: User, Song
+    })
+    return res.json(allComments)
+  })
+)
+
+module.exports = router

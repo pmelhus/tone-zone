@@ -13,11 +13,11 @@ const UserHomePage = (sessionUser) => {
           <Discover />
         </Route>
         <Route path='/stream/:songId'>
-        
+
           <Song />
         </Route>
         <Route exact path='/stream'>
-          <Songs />
+          <Songs sessionUser={sessionUser} />
         </Route>
         <Route path='/upload'>
           <Upload sessionUser={sessionUser} />
