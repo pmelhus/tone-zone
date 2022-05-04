@@ -6,9 +6,9 @@ const UPDATE = "comments/UPDATE";
 const DELETE = "comments/DELETE";
 const LOAD = "comments/LOAD"
 
-const addOneComment = (comment) => ({
+const addOneComment = (comment, user) => ({
   type: ADD_ONE,
-  comment
+  comment, user
 })
 
 const getComments = (comments) => ({
@@ -51,7 +51,7 @@ export const createComment = (comment) => async (dispatch) => {
 
     const commentRes = await response.json();
 
-    dispatch(addOneComment(commentRes));
+    dispatch(addOneComment(commentRes, commentRes.user));
   } catch (error) {
     throw error;
   }
@@ -91,7 +91,7 @@ const commentReducer = (state = initialState, action) => {
         // console.log(action.user)
         const newState = {
           ...state,
-          [action.comment.id]: action.comment
+          [action.comment.id]: {...action.comment, User: action.user}
         };
 
         // const songList = newState.songs.map((song) => newState[song.id]);

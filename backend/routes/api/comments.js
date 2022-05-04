@@ -12,10 +12,11 @@ router.post(
   "/", asyncHandler( async (req, res) => {
 
     const {userId, songId, body} = req.body;
+    const user = await User.findByPk(userId)
     const comment = await Comment.create({
       userId, songId, body
     });
-    return res.json(comment)
+    return res.json({comment, user})
   })
 )
 

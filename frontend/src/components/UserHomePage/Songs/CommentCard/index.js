@@ -1,13 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import * as sessionActions from "../../../../store/session";
-import { createComment, getAllComments, updateComment } from "../../../../store/comments"
+import {
+  createComment,
+  getAllComments,
+  updateComment,
+} from "../../../../store/comments";
 import "./CommentCard.css";
 
 const CommentCard = ({ song }) => {
   const dispatch = useDispatch();
   const [body, setBody] = useState();
-  const [hidden, setHidden] = useState(false)
+  const [hidden, setHidden] = useState(false);
   const session = useSelector((state) => state.session);
   const userId = session.user.id;
   const songId = song.id;
@@ -29,16 +33,18 @@ const CommentCard = ({ song }) => {
       userId,
       songId,
     };
-    dispatch(createComment(payload));
-    dispatch(getAllComments());
-  };
+   return dispatch(createComment(payload)).then(() => {dispatch(getAllComments())})
+
+  }
+
+
 
   const handleEdit = (e, comment) => {
     const payload = {
-     comment
-    }
-    dispatch(updateComment(payload))
-  }
+      comment,
+    };
+    dispatch(updateComment(payload));
+  };
   return (
     <>
       <div>
@@ -49,7 +55,13 @@ const CommentCard = ({ song }) => {
                 <div hidden={hidden}>
                   <h4>{comment?.User?.username}</h4>
                   {comment.body}
-                  <button onClick={(e) => {handleEdit(e, comment)}}>Edit</button>
+                  <button
+                    onClick={(e) => {
+                      handleEdit(e, comment);
+                    }}
+                  >
+                    Edit
+                  </button>
                 </div>
               );
             })}
