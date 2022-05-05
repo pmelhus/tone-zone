@@ -8,17 +8,17 @@ import Playlists from "./Playlists";
 
 const Library = () => {
   return (
-    <>
-      <Route path="you/library/overview">
-        <Overview />
-      </Route>
-      <Route path="you/library/likes">
-        <Likes />
-      </Route>
-      <Route path="you/library/playlists">
-        <Playlists />
-      </Route>
-    </>
+    <div>
+        <Route path="/you/library/overview">
+          <Overview />
+        </Route>
+        <Route path="/you/library/likes">
+          <Likes />
+        </Route>
+        <Route path="/you/library/playlists">
+          <Playlists />
+        </Route>
+    </div>
   );
 };
 

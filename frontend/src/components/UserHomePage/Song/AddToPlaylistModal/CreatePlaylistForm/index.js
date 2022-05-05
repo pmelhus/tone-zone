@@ -1,16 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { Redirect, useHistory, useParams } from "react-router-dom";
+import {createPlaylist} from "../../../../../store/playlists"
+import "./CreatePlaylistForm"
 
-const CreatePlaylistForm = ({ setShowForm, showForm }) => {
+const CreatePlaylistForm = ({ setShowForm, showForm, showPlaylist}) => {
   const { songId } = useParams();
   const [title, setTitle] = useState();
   const [errors, setErrors] = useState([]);
+  const dispatch = useDispatch()
   const song = useSelector((state) => state.songs[songId]);
-  console.log(song);
-  if (!showForm) return null;
+  const user = useSelector((state) => state.session.user)
+
+  if (!showForm && showPlaylist) return null;
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const payload = {
+      title, song, user
+    }
+    dispatch(createPlaylist(payload))
+    setShowForm(!showForm)
   };
   return (
     <>

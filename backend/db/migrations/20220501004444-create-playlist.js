@@ -10,13 +10,16 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: {model:"Users"}
+        references: {model:"Users"},
+        allowNull: false,
       },
       title: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false,
       },
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

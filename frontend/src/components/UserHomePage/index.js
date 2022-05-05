@@ -2,7 +2,7 @@ import "./UserHomePage.css";
 import Songs from "./Songs";
 import Upload from "./Upload";
 import Discover from "./Discover";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link, NavLink } from "react-router-dom";
 import Song from "./Song";
 import Library from "./Library";
 
@@ -22,7 +22,7 @@ const UserHomePage = (sessionUser) => {
         <Route path="/you/library">
           <nav className="library-nav">
             <Link to="/you/library/overview">Overview</Link>
-            <Link to="/you/library/Likes">Likes</Link>
+            <Link to="/you/library/likes">Likes</Link>
             <Link to="/you/library/playlists">Playlists</Link>
           </nav>
           <Library />

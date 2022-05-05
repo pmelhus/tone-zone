@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     imageUrl: DataTypes.STRING
   }, {});
-  
+
   Playlist.associate = function(models) {
     const columnMapping = {
       through: 'SongPlaylist',
