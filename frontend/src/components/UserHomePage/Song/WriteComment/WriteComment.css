@@ -1,0 +1,17 @@
+
+.comment-textarea form {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.comment-textarea button {
+  margin: 0;
+  width: auto;
+
+}
+
+.comment-textarea textarea {
+  width: 500px;
+  height: 20px;
+}

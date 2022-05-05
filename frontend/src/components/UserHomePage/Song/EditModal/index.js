@@ -12,6 +12,7 @@ const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
   let history = useHistory();
   const dispatch = useDispatch();
   const { songId } = useParams();
+  
   const backgroundClick = () => {
     setVisible(!visible);
   };

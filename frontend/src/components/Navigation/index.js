@@ -28,7 +28,7 @@ function Navigation({ isLoaded }) {
               </NavLink>
             </li>
             <li>
-              <NavLink to='/library'>
+              <NavLink to='/you/library'>
               <a className='library-button'>Library</a>
               </NavLink>
             </li>

@@ -5,8 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     imageUrl: DataTypes.STRING
   }, {});
+  
   Playlist.associate = function(models) {
-    Playlist.hasMany(models.Song, {foreignKey:'playlistId'})
+    const columnMapping = {
+      through: 'SongPlaylist',
+      otherKey: 'songId',
+      foreignKey: 'playlistId'
+    }
+    Playlist.belongsToMany(models.Song, columnMapping)
     Playlist.belongsTo(models.User, {foreignKey:'userId'})
   };
   return Playlist;

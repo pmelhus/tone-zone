@@ -1,25 +1,33 @@
 import "./UserHomePage.css";
 import Songs from "./Songs";
-import Upload from "./Upload"
-import Discover from "./Discover"
-import { Route, Switch } from "react-router-dom";
-import Song from "./Song"
+import Upload from "./Upload";
+import Discover from "./Discover";
+import { Route, Switch, Link } from "react-router-dom";
+import Song from "./Song";
+import Library from "./Library";
 
 const UserHomePage = (sessionUser) => {
   return (
     <div className="user-home-body">
       <Switch>
-        <Route path='/discover'>
+        <Route path="/discover">
           <Discover />
         </Route>
-        <Route path='/stream/:songId'>
-
+        <Route path="/stream/:songId">
           <Song />
         </Route>
-        <Route exact path='/stream'>
+        <Route exact path="/stream">
           <Songs sessionUser={sessionUser} />
         </Route>
-        <Route path='/upload'>
+        <Route path="/you/library">
+          <nav className="library-nav">
+            <Link to="/you/library/overview">Overview</Link>
+            <Link to="/you/library/Likes">Likes</Link>
+            <Link to="/you/library/playlists">Playlists</Link>
+          </nav>
+          <Library />
+        </Route>
+        <Route path="/upload">
           <Upload sessionUser={sessionUser} />
         </Route>
       </Switch>

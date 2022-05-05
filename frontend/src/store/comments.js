@@ -4,22 +4,28 @@ import { csrfFetch } from "./csrf";
 const ADD_ONE = "comments/ADD_ONE";
 const UPDATE = "comments/UPDATE";
 const DELETE = "comments/DELETE";
-const LOAD = "comments/LOAD"
+const LOAD = "comments/LOAD";
 
 const addOneComment = (comment, user) => ({
   type: ADD_ONE,
-  comment, user
-})
+  comment,
+  user,
+});
 
 const getComments = (comments) => ({
   type: LOAD,
-  comments
-})
+  comments,
+});
 
 const update = (comment) => ({
   type: UPDATE,
-  comment
-})
+  comment,
+});
+
+const deleteComment = (comment) => ({
+  type: DELETE,
+  comment,
+});
 
 export const createComment = (comment) => async (dispatch) => {
   try {
@@ -28,8 +34,7 @@ export const createComment = (comment) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(comment)
-
+      body: JSON.stringify(comment),
     });
     if (!response.ok) {
       let error;
@@ -40,7 +45,6 @@ export const createComment = (comment) => async (dispatch) => {
         let errorJSON;
         error = await response.text();
         try {
-
           errorJSON = JSON.parse(error);
         } catch {
           throw new Error(error);
@@ -55,7 +59,7 @@ export const createComment = (comment) => async (dispatch) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 export const getAllComments = () => async (dispatch) => {
   // console.log('================')
@@ -83,30 +87,51 @@ export const updateComment = (data) => async (dispatch) => {
   return comment;
 };
 
-const initialState = {}
+export const deleteOneComment = (data) => async (dispatch) => {
+  console.log(data)
+  const response = await csrfFetch(`/api/comments/${data.id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const comment = await response.json();
+
+  dispatch(deleteComment(comment));
+};
+
+const initialState = {};
 
 const commentReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ONE: {
-        // console.log(action.user)
-        const newState = {
-          ...state,
-          [action.comment.id]: {...action.comment, User: action.user}
-        };
+      // console.log(action.user)
+      const newState = {
+        ...state,
+        [action.comment.id]: { ...action.comment, User: action.user },
+      };
 
-        // const songList = newState.songs.map((song) => newState[song.id]);
-        // songList.push(action.song);
-        // newState.list = sortList(pokemonList);
-        return newState;
+      // const songList = newState.songs.map((song) => newState[song.id]);
+      // songList.push(action.song);
+      // newState.list = sortList(pokemonList);
+      return newState;
     }
     case LOAD: {
-      const newState = {...state};
+      const newState = { ...state };
       action.comments.forEach((comment) => (newState[comment.id] = comment));
+      return newState;
+    }
+
+    case DELETE: {
+      delete state[action.comment.id];
+      const newState = { ...state };
       return newState;
     }
     default:
       return state;
   }
-}
+};
 
-export default commentReducer
+export default commentReducer;

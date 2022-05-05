@@ -1,7 +1,9 @@
 .user-home-body {
   margin: 0 auto;
   width: 1180px;
-  padding: 0 30px;
-  margin-top: 58px;
+  /* padding: 0 30px; */
+  margin-top: 34px;
   height: 800px;
+  background-color: white;
+  padding: 20px;
 }

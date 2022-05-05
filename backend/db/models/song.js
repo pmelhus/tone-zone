@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
   const Song = sequelize.define(
     "Song",
     {
-      playlistId: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
       title: DataTypes.STRING,
       description: DataTypes.STRING,
@@ -11,10 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
+
   Song.associate = function (models) {
+    const columnMapping = {
+      through: 'SongPlaylist',
+      otherKey: 'playlistId',
+      foreignKey: 'songId'
+    }
     Song.belongsTo(models.User, { foreignKey: "userId" });
-    Song.belongsTo(models.Playlist, { foreignKey: "playlistId" });
-    Song.hasMany(models.Comment, { foreignKey: "songId" });
+    Song.belongsToMany(models.Playlist, columnMapping);
+    Song.hasMany(models.Comment, { foreignKey: "songId", onDelete: 'CASCADE', hooks: true });
   };
 
   Song.upload = async function ({ userId, title, description, url }) {

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getAllSongs, deleteOneSong } from "../../../store/songs";
 import AudioPlayer from "react-h5-audio-player";
 import { Link } from "react-router-dom";
-import CommentCard from "./CommentCard";
+// import CommentCard from "./CommentCard";
 import "./Songs.css"
 
 
@@ -40,8 +40,6 @@ const Songs = ({sessionUser}) => {
                 onPlay={(e) => console.log("onPlay")}
                 // other props here
               />
-
-              <CommentCard song={song} sessionUser={sessionUser} className='comment-card' />
               <form
                 onSubmit={(e) => {
                   handleSubmit(e, song);

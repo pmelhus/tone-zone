@@ -1,0 +1,11 @@
+.library-nav > * {
+  color: orange;
+  font-size: 20px;
+}
+
+.library-nav {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  padding-top: 10px;
+}

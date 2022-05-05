@@ -7,6 +7,7 @@ position: fixed;
 /* z-index: 100; */
 margin: 0;
 top: 0;
+z-index: 3000;
 }
 
 .nav-div {
@@ -28,6 +29,6 @@ ul {
   justify-content: space-evenly;
 }
 
-a {
+.nav-div a {
   color: white;
 }
