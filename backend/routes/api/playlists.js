@@ -28,14 +28,13 @@ router.get(
 router.get(
   "/songs/:id",
   asyncHandler(async function (req, res) {
-    const id = req.params.id
-    console.log(id, "=============")
-    const allSongs = await SongPlaylist.findAll(
-      {where: {playlistId: id}}
-    );
-    console.log(allSongs)
+    const id = req.params.id;
+    console.log(id, "=============");
+    const allSongs = await SongPlaylist.findAll({
+      where: { playlistId: id },
+    });
+    // console.log(allSongs);
     return res.json(allSongs);
-
   })
 );
 router.get(
@@ -43,14 +42,13 @@ router.get(
   asyncHandler(async function (req, res) {
     const { id } = req.params;
     const playlist = await Playlist.findByPk(id, {
-      include: [Song, User]
+      include: [Song, User],
     });
     console.log("HELLOO");
-    console.log(playlist)
+    console.log(playlist);
     return res.json(playlist);
   })
 );
-
 
 router.post(
   "/",
@@ -90,10 +88,26 @@ router.post(
     await SongPlaylist.create({
       playlistId,
       songId,
+      include: Song,
     });
     return res.json({
       data,
     });
+  })
+);
+
+router.delete(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const id = req.body.id;
+    const playlist = await Playlist.findByPk(id);
+    await SongPlaylist.destroy({
+      where: {
+        playlistId: id,
+      },
+    });
+    await playlist.destroy();
+    return res.json(playlist);
   })
 );
 

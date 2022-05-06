@@ -5,13 +5,14 @@ import { getAllSongs, deleteOneSong } from "../../../../store/songs";
 import AudioPlayer from "react-h5-audio-player";
 import { Link } from "react-router-dom";
 
-const ProfileTracks = () => {
+const ProfileTracks = ({ proPlayLoaded, setProPlayLoaded }) => {
 
   const dispatch = useDispatch();
   const songList = useSelector((state) => Object.values(state.songs));
   const sessionUser = useSelector(state => state.session.user)
 
   useEffect(() => {
+    setProPlayLoaded(false);
     dispatch(getAllSongs());
   }, [dispatch]);
   return (

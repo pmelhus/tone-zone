@@ -9,15 +9,16 @@ const LOAD = "playlists/LOAD";
 const GET_ONE ='playlists/GET_ONE'
 const GET_ALL_SONGS ='playlists/GET_ALL_SONGS'
 
-const addOnePlaylist = (playlist) => ({
+const addOnePlaylist = (payload) => ({
   type: ADD_ONE,
-  playlist
+  payload
 });
 
 
 const addOneSongToPlaylist = (song, playlist) => ({
   type: ADD_ONE_SONG,
   song, playlist
+
 })
 
 const getOne = (playlist) => ({
@@ -72,9 +73,9 @@ export const createPlaylist = (data) => async (dispatch) => {
       }
     }
 
-    const playlist = await response.json();
-
-    dispatch(addOnePlaylist(playlist));
+    const payload = await response.json();
+// console.log(payload)
+    dispatch(addOnePlaylist(payload));
   } catch (error) {
     throw error;
   }
@@ -97,9 +98,9 @@ export const getAllPlaylists = () => async (dispatch) => {
 export const getAllSongsPlaylist = (id) => async (dispatch) => {
   const res = await fetch(`/api/playlists/songs/${id}`);
 
+  // console.log(res, '==================?!?!?!?')
   if (res.ok) {
     const data = await res.json();
-console.log(data, '==================')
     dispatch(getAllSongs(data));
 
     // console.log(playlists)
@@ -165,8 +166,8 @@ export const updatePlaylist = (data) => async (dispatch) => {
   return playlist;
 };
 
-export const deleteOneplaylist = (data) => async (dispatch) => {
-  console.log(data)
+export const deleteOnePlaylist = (data) => async (dispatch) => {
+
   const response = await csrfFetch(`/api/playlists/${data.id}`, {
     method: "DELETE",
     headers: {
@@ -194,7 +195,7 @@ const playlistReducer = (state = initialState, action) => {
       // console.log(state)
       const newState = {
         ...state,
-        [action.playlist.playlist.id]: {...action.playlist.playlist, Songs: {}}
+        [action.payload.playlist.id]: {...action.payload.playlist, Songs: {...action.payload.song}, User: {...action.payload.user}}
       };
       return newState;
     }
@@ -202,7 +203,7 @@ const playlistReducer = (state = initialState, action) => {
     case GET_ONE: {
 
       // console.log(playlistSongs, "HEEERE")
-      const newState = {...state, [action.playlist.id]: {...action.playlist, Songs: {...action.playlist.Songs}}};
+      const newState = {...state, [action.playlist.id]: action.playlist};
 
       return newState;
     }
@@ -210,14 +211,14 @@ const playlistReducer = (state = initialState, action) => {
     case ADD_ONE_SONG:{
       console.log(action)
       const newState = {
-        ...state, [action.playlist.id]: {...action.playlist, Songs: {[action.song.id]: action.song}}
+        ...state, [action.playlist.id]: {...action.playlist, Songs: {...state.Songs, [action.song.id]: action.song}}
       }
 
       return newState;
     }
 
     case GET_ALL_SONGS: {
-      const newState = {...state, playlistSongs: action.songs};
+      const newState = {...state, ...{[state.id]:{...state.playlist, Songs: action.songs}}}
 
       return newState
     }
@@ -235,7 +236,7 @@ const playlistReducer = (state = initialState, action) => {
 
     case LOAD: {
       const newState = { ...state };
-
+console.log(action.playlists)
       action.playlists.forEach((playlist) => (newState[playlist.id] = playlist));
       return newState;
     }

@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     const columnMapping = {
       through: 'SongPlaylist',
       otherKey: 'songId',
-      foreignKey: 'playlistId'
+      foreignKey: 'playlistId',
+      onDelete: 'CASCADE', 
+      hooks: true
     }
     Playlist.belongsToMany(models.Song, columnMapping)
     Playlist.belongsTo(models.User, {foreignKey:'userId'})
