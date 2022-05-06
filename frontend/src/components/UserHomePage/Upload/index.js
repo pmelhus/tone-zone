@@ -1,5 +1,5 @@
 import "./Upload.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ValidationError } from "../../../utils/validationError";
@@ -14,12 +14,12 @@ const Upload = (sessionUser) => {
   const [errors, setErrors] = useState([]);
   const [audio, setAudio] = useState(null);
   // const [selectedFile, setSelectedFile] = useState(null);
+  const userId = useSelector((state)=> state.session.user.id)
 const updateDescription = (e) => setDescription(e.target.value)
   const updateTitle = (e) => setTitle(e.target.value);
 
   const onSubmit = (e) => {
     e.preventDefault();
-const userId = sessionUser.sessionUser.sessionUser.id
 // console.log(sessionUser.sessionUser.sessionUser.id)
     const payload = {
       userId,

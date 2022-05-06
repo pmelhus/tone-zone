@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { getAllPlaylists, addSongToPlaylist } from "../../../../../store/playlists";
+import PlaylistButton from "./PlaylistButton"
 
 const AddToPlaylist = ({ showPlaylist, setShowPlaylist, showForm }) => {
   const playlists = useSelector((state) => Object.values(state.playlists));
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const song = useSelector((state) => Object.values(state.songs)[0])
+
+  const [addedToPlaylist, setAddedToPlaylist] = useState(false)
 
   // console.log(song, '=============')
 
@@ -14,20 +16,17 @@ const AddToPlaylist = ({ showPlaylist, setShowPlaylist, showForm }) => {
     dispatch(getAllPlaylists());
   }, [dispatch]);
 
-const addSongPlaylist = (playlist) => {
-  const payload = {song, playlist}
-  dispatch(addSongToPlaylist(payload))
-}
+
 
   if (!showPlaylist && showForm) return null;
 
   return (
     <div className="playlist-card">
       {playlists.map((playlist) => {
+        if (playlist.userId === sessionUser.id)
         return (
           <>
-            <div>{playlist.title}</div>
-            <button onClick={(e) => addSongPlaylist(playlist)}>Add to playlist</button>
+          <PlaylistButton playlist={playlist}/>
           </>
         );
       })}

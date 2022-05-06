@@ -6,6 +6,8 @@ const ADD_ONE_SONG = 'playlists/ADD_ONE_SONG'
 const UPDATE = "playlists/UPDATE";
 const DELETE = "playlists/DELETE";
 const LOAD = "playlists/LOAD";
+const GET_ONE ='playlists/GET_ONE'
+const GET_ALL_SONGS ='playlists/GET_ALL_SONGS'
 
 const addOnePlaylist = (playlist) => ({
   type: ADD_ONE,
@@ -18,10 +20,21 @@ const addOneSongToPlaylist = (song, playlist) => ({
   song, playlist
 })
 
+const getOne = (playlist) => ({
+  type: GET_ONE,
+  playlist
+})
+
 const getPlaylists = (playlists) => ({
   type: LOAD,
   playlists,
 });
+
+const getAllSongs = (songs) => ({
+  type: GET_ALL_SONGS,
+
+  songs
+})
 
 const update = (playlist) => ({
   type: UPDATE,
@@ -75,11 +88,34 @@ export const getAllPlaylists = () => async (dispatch) => {
 
     dispatch(getPlaylists(playlists));
 
-    console.log(playlists)
+    // console.log(playlists)
   } else {
     throw res;
   }
 };
+
+export const getAllSongsPlaylist = (id) => async (dispatch) => {
+  const res = await fetch(`/api/playlists/songs/${id}`);
+
+  if (res.ok) {
+    const data = await res.json();
+console.log(data, '==================')
+    dispatch(getAllSongs(data));
+
+    // console.log(playlists)
+  } else {
+    throw res
+  }
+
+}
+
+export const getOnePlaylist = (id) => async (dispatch) => {
+  const response = await fetch(`/api/playlists/${id}`)
+
+  const playlist = await response.json();
+console.log(playlist, "$$$$$$$$$$$$$$$$")
+  dispatch(getOne(playlist))
+}
 
 export const addSongToPlaylist = (data) => async (dispatch) => {
   try {
@@ -108,8 +144,8 @@ export const addSongToPlaylist = (data) => async (dispatch) => {
     }
 
     const returned = await response.json();
-console.log(returned, '++++++++++++++=')
-console.log(returned.data.song)
+// console.log(returned, '++++++++++++++=')
+// console.log(returned.data.song)
     dispatch(addOneSongToPlaylist(returned.data.song, returned.data.playlist));
   } catch (error) {
     throw error;
@@ -144,27 +180,62 @@ export const deleteOneplaylist = (data) => async (dispatch) => {
   dispatch(deletePlaylist(playlist));
 };
 
-const initialState = {};
+const initialState = {playlistSongs: []};
+
+const sortList = (list) => {
+  return list.sort((songA, songB) => {
+    return songA.id - songB.id;
+  }).map((song) => song.id);
+};
 
 const playlistReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ONE: {
+      // console.log(state)
       const newState = {
         ...state,
-        [action.playlist.id]: { ...action.playlist, User: action.user },
+        [action.playlist.playlist.id]: {...action.playlist.playlist, Songs: {}}
       };
       return newState;
     }
 
-    case ADD_ONE_SONG:{
-      const newState = {
-        ...state, [action.playlist.id]: { ...action.playlist, Songs: action.song }
-      }
+    case GET_ONE: {
+
+      // console.log(playlistSongs, "HEEERE")
+      const newState = {...state, [action.playlist.id]: {...action.playlist, Songs: {...action.playlist.Songs}}};
+
       return newState;
     }
 
+    case ADD_ONE_SONG:{
+      console.log(action)
+      const newState = {
+        ...state, [action.playlist.id]: {...action.playlist, Songs: {[action.song.id]: action.song}}
+      }
+
+      return newState;
+    }
+
+    case GET_ALL_SONGS: {
+      const newState = {...state, playlistSongs: action.songs};
+
+      return newState
+    }
+
+    // case UPDATE: {
+    //   let newState = { ...state };
+    //   let newStateObj = Object.values(newState);
+    //   const song = newStateObj.find((object) => object.id === action.song.id);
+
+    //   song.title = action.song.title;
+    //   song.description = action.song.description;
+
+    //   return newState;
+    // }
+
     case LOAD: {
       const newState = { ...state };
+
       action.playlists.forEach((playlist) => (newState[playlist.id] = playlist));
       return newState;
     }

@@ -25,6 +25,33 @@ router.get(
   })
 );
 
+router.get(
+  "/songs/:id",
+  asyncHandler(async function (req, res) {
+    const id = req.params.id
+    console.log(id, "=============")
+    const allSongs = await SongPlaylist.findAll(
+      {where: {playlistId: id}}
+    );
+    console.log(allSongs)
+    return res.json(allSongs);
+
+  })
+);
+router.get(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    const { id } = req.params;
+    const playlist = await Playlist.findByPk(id, {
+      include: [Song, User]
+    });
+    console.log("HELLOO");
+    console.log(playlist)
+    return res.json(playlist);
+  })
+);
+
+
 router.post(
   "/",
   asyncHandler(async (req, res) => {
@@ -32,6 +59,7 @@ router.post(
     const { title, song, user } = req.body;
     const userId = user.id;
     // console.log(url)
+
     const playlist = await Playlist.create({
       title,
       userId,
@@ -57,6 +85,7 @@ router.post(
     const playlistId = req.body.playlist.id;
     const songId = req.body.song.id;
     // await console.log(songId)
+
     const data = req.body;
     await SongPlaylist.create({
       playlistId,
@@ -67,5 +96,12 @@ router.post(
     });
   })
 );
+
+// router.put(
+//   ':id',
+//   asyncHandler(async (req,res) => {
+
+//   })
+// )
 
 module.exports = router;

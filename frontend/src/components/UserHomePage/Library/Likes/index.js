@@ -1,8 +1,9 @@
 const Likes = () => {
   return (
     <>
-    </>
-  )
-}
 
-export default Likes
+    </>
+  );
+};
+
+export default Likes;

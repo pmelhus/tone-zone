@@ -18,28 +18,35 @@ function Navigation({ isLoaded }) {
         <nav>
           <ul>
             <li>
-              <NavLink to='/discover'>
-              <a className="home-nav-button">Home</a>
+              <NavLink to="/discover">
+                <a>Home</a>
               </NavLink>
             </li>
             <li>
-              <NavLink to='/stream'>
-              <a className='playlist-nav-button'>Stream</a>
+              <NavLink to="/stream">
+                <a>Stream</a>
               </NavLink>
             </li>
             <li>
-              <NavLink to='/you/library'>
-              <a className='library-button'>Library</a>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/upload'>
-                <a className='upload-button'>Upload</a>
+              <NavLink to="/you/library">
+                <a>Library</a>
               </NavLink>
             </li>
           </ul>
+          <div className="profile-button">
+            <div>
+              <NavLink to="/upload">
+                <a>Upload</a>
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to={`/${sessionUser.username}`}>
+                <a>Profile</a>
+              </NavLink>
+            </div>
+            <div>{isLoaded && sessionLinks}</div>
+          </div>
         </nav>
-        <div className="profile-button">{isLoaded && sessionLinks}</div>
       </div>
     </header>
   );

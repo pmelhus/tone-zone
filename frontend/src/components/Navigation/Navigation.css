@@ -12,15 +12,15 @@ z-index: 3000;
 
 .nav-div {
   display: flex;
-  justify-content: center;
-  width: 1240px;
+  justify-content: space-evenly;
+  width: 1180px;
   margin: 0 auto;
 }
 
 nav {
   width: 100%;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
 }
 
 ul {
@@ -31,4 +31,12 @@ ul {
 
 .nav-div a {
   color: white;
+
+}
+
+.profile-button {
+  display: flex;
+  justify-content: space-evenly;
+width: 400px;
+align-items: center;
 }

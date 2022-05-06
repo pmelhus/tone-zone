@@ -1,12 +1,16 @@
 import "./UserHomePage.css";
 import Songs from "./Songs";
+import { useDispatch, useSelector } from "react-redux";
 import Upload from "./Upload";
 import Discover from "./Discover";
 import { Route, Switch, Link, NavLink } from "react-router-dom";
 import Song from "./Song";
 import Library from "./Library";
+import ProfilePage from "./ProfilePage";
 
-const UserHomePage = (sessionUser) => {
+// howler.js range i
+const UserHomePage = () => {
+  const sessionUser = useSelector((state) => state.session.user);
   return (
     <div className="user-home-body">
       <Switch>
@@ -29,6 +33,9 @@ const UserHomePage = (sessionUser) => {
         </Route>
         <Route path="/upload">
           <Upload sessionUser={sessionUser} />
+        </Route>
+        <Route path="/:username">
+          <ProfilePage />
         </Route>
       </Switch>
     </div>
