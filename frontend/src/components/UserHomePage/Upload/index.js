@@ -13,6 +13,7 @@ const Upload = (sessionUser) => {
   const history = useHistory();
   const [errorMessages, setErrorMessages] = useState({});
   const [audio, setAudio] = useState(null);
+  const [image, setImage] = useState(null);
   // const [selectedFile, setSelectedFile] = useState(null);
   const userId = useSelector((state) => state.session.user.id);
   const updateDescription = (e) => setDescription(e.target.value);
@@ -21,22 +22,27 @@ const Upload = (sessionUser) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     // console.log(sessionUser.sessionUser.sessionUser.id)
+
     const payload = {
       userId,
       title,
       description,
       audio,
+      image,
+      files: [audio, image],
     };
-    // console.log(payload)
+    // console.log(files)
     let createdSong;
     try {
       createdSong = await dispatch(songActions.createSong(payload))
         .then(() => history.push(`/stream`))
         .then(() => dispatch(songActions.getAllSongs()));
     } catch (error) {
+      console.log(payload);
       if (error instanceof ValidationError) {
-        console.log('===================')
-        setErrorMessages(error.errors)}
+        // console.log('===================')
+        setErrorMessages(error.errors);
+      }
 
       // If error is not a ValidationError, add slice at the end to remove extra
       // "Error: "
@@ -53,21 +59,20 @@ const Upload = (sessionUser) => {
       history.push(`/stream`);
       dispatch(songActions.getAllSongs());
     }
-
-    // return dispatch(songActions.createSong(payload))
-    //   .then(() => {
-    //     setTitle("");
-    //     setDescription('');
-    //     setAudio(null);
-    //   })
-    //   .then(history.push(`/stream`)).then(()=> {songActions.getAllSongs()});
   };
 
   //!!END
 
-  const updateFile = (e) => {
+  const updateAudio = (e) => {
     const file = e.target.files[0];
+
     if (file) setAudio(file);
+  };
+
+  const updateImage = (e) => {
+    const file = e.target.files[0];
+    if (file) setImage(file);
+    console.log(e.target.files, "FILE HEREEEE");
   };
 
   const handleCancelClick = (e) => {
@@ -116,9 +121,20 @@ const Upload = (sessionUser) => {
           type="file"
           name="song-upload"
           accept="audio/*"
-          onChange={updateFile}
+          onChange={updateAudio}
           required
         ></input>
+
+        <label for="song-upload">Upload song cover</label>
+
+          <input
+            placeholder="Upload your image"
+            type="file"
+            accept="image/*"
+            name="image-upload"
+            onChange={updateImage}
+          ></input>
+
         <ErrorMessage label={"Upload your file"} message={errorMessages.file} />
         <button>Save</button>
         <button type="button" onClick={handleCancelClick}>

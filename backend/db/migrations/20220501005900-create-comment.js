@@ -17,7 +17,8 @@ module.exports = {
         references: {model:"Songs"}
       },
       body: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING(150),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

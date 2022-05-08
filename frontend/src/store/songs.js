@@ -57,12 +57,19 @@ export const getOneSong = (id) => async (dispatch) => {
 };
 
 export const createSong = (song) => async (dispatch) => {
-  const { userId, title, description, audio } = song;
+  const { userId, title, description, audio, files} = song;
   const formData = new FormData();
   formData.append("userId", userId);
   formData.append("title", title);
   formData.append("description", description);
-  if (audio) formData.append("audio", audio);
+
+  if (files.length === 2){
+    for (let i = 0; i < files.length; i++) {
+console.log(files[i])
+      formData.append("files", files[i])}
+    }
+  if (audio && files.length === 1) formData.append('audio', audio)
+
   try {
     const response = await csrfFetch(`/api/songs/`, {
       method: "POST",
@@ -102,6 +109,7 @@ export const createSong = (song) => async (dispatch) => {
 };
 
 export const updateSong = (data) => async (dispatch) => {
+  try {
   const response = await csrfFetch(`/api/songs/${data.songId}`, {
     method: "PUT",
     headers: {
@@ -109,9 +117,35 @@ export const updateSong = (data) => async (dispatch) => {
     },
     body: JSON.stringify(data),
   });
+
+
+  if (!response.ok) {
+    let error;
+    if (response.status === 422) {
+
+      error = await response.json();
+      throw new ValidationError(error.errors, response.statusText);
+    } else {
+      let errorJSON;
+      error = await response.text();
+      try {
+        // Check if the error is JSON, i.e., from the Pokemon server. If so,
+        // don't throw error yet or it will be caught by the following catch
+        errorJSON = JSON.parse(error);
+      } catch {
+        // Case if server could not be reached
+        throw new Error(error);
+      }
+      throw new Error(`${errorJSON.title}: ${errorJSON.message}`);
+    }
+  }
   const song = await response.json();
   dispatch(update(song));
-  return song;
+} catch (error) {
+
+  // console.log(error, '=-=================')
+  throw error;
+}
 };
 
 export const deleteOneSong = (data) => async (dispatch) => {

@@ -9,22 +9,23 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           len: {
             args: [2, 50],
-            msg: "must be between 2 and 50 characters ",
+            msg: "Title must have more than 2 characters and less than 50 ",
           },
         },
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
       },
       description: {
         type: DataTypes.STRING,
         validate: {
           len: {
             args: [2, 250],
-            msg: "must be between 1 and 250 characters ",
+            msg: "Description must have more than 2 characters and less than 250",
           },
         },
       },
 
       url: DataTypes.STRING,
+      imageUrl: DataTypes.STRING,
     },
     {}
   );
@@ -44,12 +45,14 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  Song.upload = async function ({ userId, title, description, url }) {
+  Song.upload = async function ({ userId, title, description, url, imageUrl }) {
+    console.log(imageUrl)
     const song = await Song.create({
       userId,
       title,
       description,
       url,
+      imageUrl
     });
     return Song.findByPk(song.id);
   };

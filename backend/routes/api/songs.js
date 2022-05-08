@@ -2,10 +2,13 @@ const songs = require("../../db/models");
 const csurf = require("csurf");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-const { singleMulterUpload, singlePublicFileUpload } = require("../../awsS3");
+const { singleMulterUpload, singlePublicFileUpload, multipleMulterUpload, multiplePublicFileUpload } = require("../../awsS3");
 
 // const songValidations = require('../../utils/songs')
 const { Song, User } = require("../../db/models");
+
+
+
 
 const router = express.Router();
 
@@ -33,12 +36,18 @@ router.get(
 
 router.post(
   "/",
+multipleMulterUpload('files'),
 
-  singleMulterUpload("audio"),
   asyncHandler(async (req, res) => {
     const { userId, title, description } = req.body;
+
     // console.log(req.body);
-    const url = await singlePublicFileUpload(req.file);
+    const files = await multiplePublicFileUpload(req.files);
+
+    const url = files[0]
+    const imageUrl = files[1]
+    // console.log(image, "======================")
+    // const imageUrl = await singlePublicFileUpload(req.)
     const user = await User.findByPk(userId);
     // console.log(url)
     const song = await Song.upload({
@@ -46,6 +55,7 @@ router.post(
       title,
       description,
       url,
+      imageUrl
     });
     return res.json({
       song,

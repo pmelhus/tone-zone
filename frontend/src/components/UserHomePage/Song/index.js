@@ -8,6 +8,7 @@ import EditModal from "./EditModal";
 import CommentCard from "./CommentCard";
 import WriteComment from "./WriteComment";
 import AddToPlaylistModal from "./AddToPlaylistModal";
+import { ValidationError } from "../../../utils/validationError";
 import "./Song.css";
 
 const Song = () => {
@@ -18,7 +19,7 @@ const Song = () => {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const song = useSelector((state) => state.songs[songId]);
-
+console.log(song)
   useEffect(() => {
     dispatch(getOneSong(songId));
   }, [dispatch]);
@@ -57,6 +58,7 @@ const Song = () => {
       {song && (
         <div>
           <div className="song-player">
+            <img src={song?.imageUrl}></img>
             <h2>
               {song?.title} <br></br> {song?.User?.username}
             </h2>
