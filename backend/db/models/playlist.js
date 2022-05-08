@@ -2,7 +2,16 @@
 module.exports = (sequelize, DataTypes) => {
   const Playlist = sequelize.define('Playlist', {
     userId: DataTypes.INTEGER,
-    title: DataTypes.STRING,
+    title: {
+      allowNull: false,
+      validate: {
+        len: {
+          args: [2, 50],
+          msg: "Title must have more than 2 characters and less than 50 ",
+        },
+      },
+      type: DataTypes.STRING(50),
+    },
     imageUrl: DataTypes.STRING
   }, {});
 
@@ -11,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'SongPlaylist',
       otherKey: 'songId',
       foreignKey: 'playlistId',
-      onDelete: 'CASCADE', 
+      onDelete: 'CASCADE',
       hooks: true
     }
     Playlist.belongsToMany(models.Song, columnMapping)

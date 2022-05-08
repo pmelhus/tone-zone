@@ -57,12 +57,19 @@ export const getOneSong = (id) => async (dispatch) => {
 };
 
 export const createSong = (song) => async (dispatch) => {
-  const { userId, title, description, audio } = song;
+  const { userId, title, description, audio, files} = song;
   const formData = new FormData();
   formData.append("userId", userId);
   formData.append("title", title);
   formData.append("description", description);
-  if (audio) formData.append("audio", audio);
+
+  if (files.length === 2){
+    for (let i = 0; i < files.length; i++) {
+console.log(files[i])
+      formData.append("files", files[i])}
+    }
+  if (audio && files.length === 1) formData.append('audio', audio)
+
   try {
     const response = await csrfFetch(`/api/songs/`, {
       method: "POST",
@@ -96,7 +103,7 @@ export const createSong = (song) => async (dispatch) => {
     dispatch(addOneSong(song, song.user));
   } catch (error) {
 
-    // console.log(error, '=-=================')
+    console.log(error, '=-=================')
     throw error;
   }
 };

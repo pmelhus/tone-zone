@@ -40,7 +40,7 @@ const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
       );
     } catch (error) {
       if (error instanceof ValidationError) {
-        console.log('===================')
+        // console.log('===================')
         setErrorMessages(error.errors);
       }
 

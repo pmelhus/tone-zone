@@ -75,20 +75,40 @@ export const getAllComments = () => async (dispatch) => {
 };
 
 export const updateComment = (data) => async (dispatch) => {
-  const response = await csrfFetch(`/api/comments/${data.comment.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  const comment = await response.json();
-  dispatch(update(comment));
-  return comment;
+  try {
+    const response = await csrfFetch(`/api/comments/${data.comment.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      let error;
+      if (response.status === 422) {
+        error = await response.json();
+        throw new ValidationError(error.errors, response.statusText);
+      } else {
+        let errorJSON;
+        error = await response.text();
+        try {
+          errorJSON = JSON.parse(error);
+        } catch {
+          throw new Error(error);
+        }
+        throw new Error(`${errorJSON.title}: ${errorJSON.message}`);
+      }
+    }
+    const comment = await response.json();
+    dispatch(update(comment));
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteOneComment = (data) => async (dispatch) => {
-  console.log(data)
+  console.log(data);
   const response = await csrfFetch(`/api/comments/${data.id}`, {
     method: "DELETE",
     headers: {
