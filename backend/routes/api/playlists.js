@@ -29,7 +29,6 @@ router.get(
   "/songs/:id",
   asyncHandler(async function (req, res) {
     const id = req.params.id;
-    console.log(id, "=============");
     const allSongs = await SongPlaylist.findAll({
       where: { playlistId: id },
     });
@@ -44,8 +43,7 @@ router.get(
     const playlist = await Playlist.findByPk(id, {
       include: [Song, User],
     });
-    console.log("HELLOO");
-    console.log(playlist);
+
     return res.json(playlist);
   })
 );
@@ -101,6 +99,7 @@ router.delete(
   asyncHandler(async (req, res) => {
     const id = req.body.id;
     const playlist = await Playlist.findByPk(id);
+
     await SongPlaylist.destroy({
       where: {
         playlistId: id,
@@ -111,11 +110,39 @@ router.delete(
   })
 );
 
-// router.put(
-//   ':id',
-//   asyncHandler(async (req,res) => {
+router.put(
+  '/:id',
+  asyncHandler(async (req,res) => {
+    const id = req.body.id
+    // console.log(id)
+    const reqTitle = req.body.title
+    const thePlaylist = await Playlist.findByPk(id)
+    await console.log(thePlaylist, '=============')
 
-//   })
-// )
+
+    const editedPlaylist = await thePlaylist.update({
+      title: reqTitle
+    })
+    return res.json(editedPlaylist)
+  })
+)
+
+router.delete(
+  "/song/:id",
+  asyncHandler(async (req, res) => {
+    // console.log(req.body)
+    const songId = req.body.song.id
+    const playlistId = req.body.playlist.id
+
+    const deletedSong = await SongPlaylist.destroy({
+      where: {
+        playlistId: playlistId,
+        songId: songId
+      },
+    });
+
+    return res.json(req.body);
+  })
+);
 
 module.exports = router;

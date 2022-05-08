@@ -8,6 +8,8 @@ const DELETE = "playlists/DELETE";
 const LOAD = "playlists/LOAD";
 const GET_ONE ='playlists/GET_ONE'
 const GET_ALL_SONGS ='playlists/GET_ALL_SONGS'
+const DELETE_ONE_SONG ="playlists/DELETE_ONE_SONG"
+
 
 const addOnePlaylist = (payload) => ({
   type: ADD_ONE,
@@ -46,6 +48,11 @@ const deletePlaylist = (playlist) => ({
   type: DELETE,
   playlist,
 });
+
+const deleteSong = (payload) => ({
+  type: DELETE_ONE_SONG,
+  payload
+})
 
 export const createPlaylist = (data) => async (dispatch) => {
   try {
@@ -102,7 +109,7 @@ export const getAllSongsPlaylist = (id) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(getAllSongs(data));
-
+console.log(data, "============")
     // console.log(playlists)
   } else {
     throw res
@@ -154,7 +161,7 @@ export const addSongToPlaylist = (data) => async (dispatch) => {
 }
 
 export const updatePlaylist = (data) => async (dispatch) => {
-  const response = await csrfFetch(`/api/playlists/${data.playlist.id}`, {
+  const response = await csrfFetch(`/api/playlists/${data.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -181,6 +188,20 @@ export const deleteOnePlaylist = (data) => async (dispatch) => {
   dispatch(deletePlaylist(playlist));
 };
 
+export const deleteOneSong = (data) => async (dispatch) => {
+  console.log(data, "here!")
+  const response = await csrfFetch(`/api/playlists/song/${data.song.id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const deletedSong = await response.json()
+console.log(deletedSong, '======?!?!??!?!')
+  dispatch(deleteSong(deletedSong))
+}
+
 const initialState = {playlistSongs: []};
 
 const sortList = (list) => {
@@ -203,9 +224,13 @@ const playlistReducer = (state = initialState, action) => {
     case GET_ONE: {
 
       // console.log(playlistSongs, "HEEERE")
-      const newState = {...state, [action.playlist.id]: action.playlist};
+      if (action.playlist) {
 
-      return newState;
+        const newState = {...state, [action.playlist.id]: action.playlist};
+        return newState
+      }
+
+      return state
     }
 
     case ADD_ONE_SONG:{
@@ -218,21 +243,21 @@ const playlistReducer = (state = initialState, action) => {
     }
 
     case GET_ALL_SONGS: {
-      const newState = {...state, ...{[state.id]:{...state.playlist, Songs: action.songs}}}
+      const newState = {...state, [state.playlists]:{...state.playlist, Songs: {...action.songs}}}
 
       return newState
     }
 
-    // case UPDATE: {
-    //   let newState = { ...state };
-    //   let newStateObj = Object.values(newState);
-    //   const song = newStateObj.find((object) => object.id === action.song.id);
+    case UPDATE: {
+      let newState = { ...state };
+      let newStateObj = Object.values(newState);
+      const playlist = newStateObj.find((object) => object.id === action.playlist.id);
 
-    //   song.title = action.song.title;
-    //   song.description = action.song.description;
+      playlist.title = action.playlist.title;
 
-    //   return newState;
-    // }
+
+      return newState;
+    }
 
     case LOAD: {
       const newState = { ...state };
@@ -245,6 +270,13 @@ console.log(action.playlists)
       delete state[action.playlist.id];
       const newState = { ...state };
       return newState;
+    }
+    case DELETE_ONE_SONG: {
+      console.log(action.payload, 'payload!!!')
+    const newSongsArr = state[action.payload.playlist.id].Songs.filter(object => object.id !== action.payload.song.id)
+state[action.payload.playlist.id].Songs = newSongsArr
+const newState = {...state}
+return newState
     }
     default:
       return state;

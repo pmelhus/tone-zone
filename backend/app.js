@@ -47,17 +47,26 @@ app.use((_req, _res, next) => {
 });
 
 app.use((err, _req, _res, next) => {
+
   if (err instanceof ValidationError) {
-    err.errors = err.errors.map((e) => e.message);
+    err.status = 422;
+    const errorMessages = {};
+    err.errors.forEach((e) => {
+      errorMessages[e.path] =
+        // If field appears as first word in error message, strip it out
+        e.message
+    });
+    err.errors = errorMessages;
     err.title = "Validation error";
   }
+
   next(err);
 });
+
 
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
-  console.error(err);
   res.json({
     title: err.title || "Server Error",
     message: err.message,

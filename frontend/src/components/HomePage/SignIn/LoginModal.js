@@ -54,7 +54,7 @@ const LoginModal = ({ visible, setVisible }) => {
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-content">
-          <div className="fang-buttons">
+          {/* <div className="fang-buttons">
             <div className="fb-button"></div>
             <button type="button">Continue with Facebook</button>
             <div className="google-button"></div>
@@ -64,7 +64,7 @@ const LoginModal = ({ visible, setVisible }) => {
             <div className="auth-separator">
               <span className="or-span">or</span>
             </div>
-          </div>
+          </div> */}
           <form onSubmit={handleSubmit}>
             <ul>
               {errors.map((error, idx) => (
