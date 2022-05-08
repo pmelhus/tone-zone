@@ -35,7 +35,7 @@ const Upload = (sessionUser) => {
         .then(() => dispatch(songActions.getAllSongs()));
     } catch (error) {
       if (error instanceof ValidationError) {
-        console.log('===================')
+        // console.log('===================')
         setErrorMessages(error.errors)}
 
       // If error is not a ValidationError, add slice at the end to remove extra
@@ -53,14 +53,6 @@ const Upload = (sessionUser) => {
       history.push(`/stream`);
       dispatch(songActions.getAllSongs());
     }
-
-    // return dispatch(songActions.createSong(payload))
-    //   .then(() => {
-    //     setTitle("");
-    //     setDescription('');
-    //     setAudio(null);
-    //   })
-    //   .then(history.push(`/stream`)).then(()=> {songActions.getAllSongs()});
   };
 
   //!!END

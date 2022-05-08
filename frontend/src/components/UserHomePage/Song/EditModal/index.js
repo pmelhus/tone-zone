@@ -3,16 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import "./EditModal.css";
 import { updateSong, getOneSong } from "../../../../store/songs";
+import { ValidationError } from "../../../../utils/validationError";
+import ErrorMessage from "../../../ErrorMessage";
 
 const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
   const [title, setTitle] = useState(propTitle);
   const [description, setDescription] = useState(propDescription);
   const [errors, setErrors] = useState([]);
+  const [errorMessages, setErrorMessages] = useState({});
 
   let history = useHistory();
   const dispatch = useDispatch();
   const { songId } = useParams();
-  
+
   const backgroundClick = () => {
     setVisible(!visible);
   };
@@ -21,7 +24,7 @@ const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
   // const updateTitle = (e) => {setTitle(e.target.value)}
   // const updateDescription = (e) => {setDescription(e.target.value)}
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
@@ -29,10 +32,29 @@ const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
       title,
       description,
     };
-    dispatch(updateSong(payload));
-    dispatch(getOneSong(songId));
 
-    setVisible(!visible);
+    let editedSong;
+    try {
+      editedSong = await dispatch(updateSong(payload)).then(() =>
+        dispatch(getOneSong(songId))
+      );
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        console.log('===================')
+        setErrorMessages(error.errors);
+      }
+
+      // If error is not a ValidationError, add slice at the end to remove extra
+      // "Error: "
+      else setErrorMessages({ overall: error.toString().slice(7) });
+    }
+    //!!END
+    if (editedSong) {
+      //!!START SILENT
+      setErrorMessages({});
+      dispatch(getOneSong(songId));
+      setVisible(!visible);
+    }
   };
 
   return (
@@ -43,6 +65,7 @@ const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
       }}
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <ErrorMessage message={errorMessages.overall} />
         <form onSubmit={handleSubmit}>
           <ul>
             {errors.map((error, idx) => (
@@ -57,6 +80,7 @@ const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
               onChange={(e) => setTitle(e.target.value)}
               required
             />
+            <ErrorMessage label={"title"} message={errorMessages.title} />
           </div>
           <div className="description-div">
             <label>Description</label>
@@ -65,6 +89,10 @@ const EditModal = ({ propTitle, propDescription, visible, setVisible }) => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+            />
+            <ErrorMessage
+              label={"description"}
+              message={errorMessages.description}
             />
           </div>
           <button type="submit">Submit Edit</button>

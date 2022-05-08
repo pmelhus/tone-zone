@@ -96,12 +96,13 @@ export const createSong = (song) => async (dispatch) => {
     dispatch(addOneSong(song, song.user));
   } catch (error) {
 
-    console.log(error, '=-=================')
+    // console.log(error, '=-=================')
     throw error;
   }
 };
 
 export const updateSong = (data) => async (dispatch) => {
+  try {
   const response = await csrfFetch(`/api/songs/${data.songId}`, {
     method: "PUT",
     headers: {
@@ -109,9 +110,35 @@ export const updateSong = (data) => async (dispatch) => {
     },
     body: JSON.stringify(data),
   });
+
+
+  if (!response.ok) {
+    let error;
+    if (response.status === 422) {
+
+      error = await response.json();
+      throw new ValidationError(error.errors, response.statusText);
+    } else {
+      let errorJSON;
+      error = await response.text();
+      try {
+        // Check if the error is JSON, i.e., from the Pokemon server. If so,
+        // don't throw error yet or it will be caught by the following catch
+        errorJSON = JSON.parse(error);
+      } catch {
+        // Case if server could not be reached
+        throw new Error(error);
+      }
+      throw new Error(`${errorJSON.title}: ${errorJSON.message}`);
+    }
+  }
   const song = await response.json();
   dispatch(update(song));
-  return song;
+} catch (error) {
+
+  // console.log(error, '=-=================')
+  throw error;
+}
 };
 
 export const deleteOneSong = (data) => async (dispatch) => {
