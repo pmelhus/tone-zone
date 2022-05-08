@@ -21,9 +21,9 @@ function App() {
             <HomePage />
           </Route>
         )}
-        {sessionUser && isLoaded && (
+        {sessionUser && (
           <>
-            <Navigation isLoaded={isLoaded} />
+            <Navigation isLoaded={isLoaded} sessionUser={sessionUser} />
             <UserHomePage sessionUser={sessionUser} />
           </>
         )}

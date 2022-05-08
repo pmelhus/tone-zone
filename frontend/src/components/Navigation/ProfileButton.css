@@ -1,16 +1,26 @@
 .profile-dropdown {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  width: 10px;
+  margin-right: 50px;
   background-color: white;
+  position:absolute;
+  height: 20px;
+
 }
 
 .menu {
-  width: 100px;
-  display: flex;
-  flex-direction: column;
-  
+  width: 50px;
+
 
   /* align-items: right; */
   /* justify-content: right; */
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  position: relative;
+  /* display:inline-block; */
+
 }

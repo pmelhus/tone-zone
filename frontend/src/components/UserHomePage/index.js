@@ -7,10 +7,13 @@ import { Route, Switch, Link, NavLink } from "react-router-dom";
 import Song from "./Song";
 import Library from "./Library";
 import ProfilePage from "./ProfilePage";
+import {restoreUser} from '../../store/session'
+import {useEffect} from "react"
 
 // howler.js range i
-const UserHomePage = () => {
-  const sessionUser = useSelector((state) => state.session.user);
+const UserHomePage = (sessionUser) => {
+
+
   return (
     <div className="user-home-body">
       <Switch>

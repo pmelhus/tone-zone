@@ -47,6 +47,11 @@ function SignupFormPage({ visible, setVisible }) {
   };
   if (!visible) return null;
 
+  const updateImage = (e) => {
+    const file = e.target.files[0];
+    if (file) setImage(file);
+  };
+
   return (
     <div
       className="background-modal"
@@ -98,9 +103,15 @@ function SignupFormPage({ visible, setVisible }) {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            <label>
-          <input type="file" onChange={updateFile} />
-        </label>
+      <label for="song-upload">Upload song cover</label>
+
+<input
+  placeholder="Upload your image"
+  type="file"
+  accept="image/*"
+  name="image-upload"
+  onChange={updateImage}
+></input>
         {/* <label>
             Multiple Upload
             <input
