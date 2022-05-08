@@ -28,10 +28,10 @@ const Song = () => {
   };
 
   const openPlaylist = (e) => {
-    console.log("==============");
+    // console.log("==============");
     // if (playModal) return
     setPlayModal(!playModal);
-    console.log(playModal);
+    // console.log(playModal);
   };
 
   const openMenu = (e) => {

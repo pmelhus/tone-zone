@@ -4,8 +4,26 @@ module.exports = (sequelize, DataTypes) => {
     "Song",
     {
       userId: DataTypes.INTEGER,
-      title: DataTypes.STRING,
-      description: DataTypes.STRING,
+      title: {
+        allowNull: false,
+        validate: {
+          len: {
+            args: [2, 50],
+            msg: "must be between 2 and 50 characters ",
+          },
+        },
+        type: DataTypes.STRING,
+      },
+      description: {
+        type: DataTypes.STRING,
+        validate: {
+          len: {
+            args: [2, 250],
+            msg: "must be between 1 and 250 characters ",
+          },
+        },
+      },
+
       url: DataTypes.STRING,
     },
     {}
@@ -13,13 +31,17 @@ module.exports = (sequelize, DataTypes) => {
 
   Song.associate = function (models) {
     const columnMapping = {
-      through: 'SongPlaylist',
-      otherKey: 'playlistId',
-      foreignKey: 'songId'
-    }
+      through: "SongPlaylist",
+      otherKey: "playlistId",
+      foreignKey: "songId",
+    };
     Song.belongsTo(models.User, { foreignKey: "userId" });
     Song.belongsToMany(models.Playlist, columnMapping);
-    Song.hasMany(models.Comment, { foreignKey: "songId", onDelete: 'CASCADE', hooks: true });
+    Song.hasMany(models.Comment, {
+      foreignKey: "songId",
+      onDelete: "CASCADE",
+      hooks: true,
+    });
   };
 
   Song.upload = async function ({ userId, title, description, url }) {

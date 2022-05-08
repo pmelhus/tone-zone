@@ -25,7 +25,7 @@ const UserHomePage = () => {
         </Route>
         <Route path="/you/library">
           <nav className="library-nav">
-            <Link to="/you/library/overview">Overview</Link>
+            {/* <Link to="/you/library/overview">Overview</Link> */}
             <Link to="/you/library/likes">Likes</Link>
             <Link to="/you/library/playlists">Playlists</Link>
           </nav>

@@ -71,9 +71,11 @@ export const createSong = (song) => async (dispatch) => {
       },
       body: formData,
     });
+
     if (!response.ok) {
       let error;
       if (response.status === 422) {
+
         error = await response.json();
         throw new ValidationError(error.errors, response.statusText);
       } else {
@@ -90,10 +92,11 @@ export const createSong = (song) => async (dispatch) => {
         throw new Error(`${errorJSON.title}: ${errorJSON.message}`);
       }
     }
-
     const song = await response.json();
     dispatch(addOneSong(song, song.user));
   } catch (error) {
+
+    console.log(error, '=-=================')
     throw error;
   }
 };
@@ -122,7 +125,7 @@ export const deleteOneSong = (data) => async (dispatch) => {
   });
 
   const song = await response.json();
-  
+
   dispatch(deleteSong(song));
 };
 

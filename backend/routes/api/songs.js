@@ -4,6 +4,7 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { singleMulterUpload, singlePublicFileUpload } = require("../../awsS3");
 
+// const songValidations = require('../../utils/songs')
 const { Song, User } = require("../../db/models");
 
 const router = express.Router();
@@ -32,6 +33,7 @@ router.get(
 
 router.post(
   "/",
+
   singleMulterUpload("audio"),
   asyncHandler(async (req, res) => {
     const { userId, title, description } = req.body;
