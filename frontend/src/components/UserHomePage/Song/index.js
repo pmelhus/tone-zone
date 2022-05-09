@@ -63,9 +63,11 @@ const Song = () => {
             style={{ backgroundImage: `url("${song.imageUrl}")` }}
           >
             <div className="song-player">
-              <div className="title-song-player">
-                <p id="title-p">{song?.title}</p>
-                <p id="username-p">{song?.User?.username}</p>
+              <div className="title-song-player-rel">
+                <div className="title-song-player">
+                  <p id="title-p">{song?.title}</p>
+                  <p id="username-p">{song?.User?.username}</p>
+                </div>
               </div>
 
               <AudioPlayer
@@ -92,18 +94,19 @@ const Song = () => {
               {user.id === song.User.id && (
                 <button onClick={handleDelete}>Delete</button>
               )}
-              <button onClick={(e) => openMenu(e)}>
-                <i class="fa-solid fa-ellipsis"></i>More
-              </button>
-              {showMenu && (
-                <ul className="profile-dropdown">
-                  <li>
-                    <button onClick={(e) => openPlaylist()}>
-                      add to playlist
-                    </button>
-                  </li>
-                </ul>
-              )}
+              <div className="dropdown-more">
+                <button onClick={(e) => openMenu(e)}>
+                  <i class="fa-solid fa-ellipsis"></i>More
+                </button>
+                {showMenu && (
+                  <div
+                    className="profile-dropdown"
+                    onClick={(e) => openPlaylist()}
+                  >
+                    <a>add to playlist</a>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className="avatar-comment-description">

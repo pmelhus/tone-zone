@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { createPlaylist } from "../../../../../store/playlists";
-import "./CreatePlaylistForm";
+import "./CreatePlaylistForm.css";
 import { ValidationError } from "../../../../../utils/validationError";
 import ErrorMessage from "../../../../ErrorMessage";
 
@@ -55,25 +55,35 @@ const CreatePlaylistForm = ({ setShowForm, showForm, showPlaylist }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="title-div">
-          <ErrorMessage message={errorMessages.overall} />
-          <label>Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
-        <ErrorMessage label={"Error"} message={errorMessages.title} />
-        <div>
-          <h2>
-            {song?.title} - {song?.User.username}
-          </h2>
-        </div>
-        <button type="submit">Create Playlist</button>
-      </form>
+      <div className="create-submit-container">
+        <form onSubmit={handleSubmit}>
+          <div className="title-div-playlist">
+            <ErrorMessage message={errorMessages.overall} />
+            <div className="input-flex">
+              <label>Playlist title</label>
+              <div className='button-row'>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div className='real-button-row'>
+                <button type="submit">Save</button>
+
+              </div>
+            </div>
+          </div>
+          <ErrorMessage label={"Error"} message={errorMessages.title} />
+          <div className="song-create-playlist">
+            <img className='avatar'src={song?.imageUrl}></img>
+            <p>
+              {song?.User.username} - {song?.title}
+            </p>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

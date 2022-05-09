@@ -29,6 +29,9 @@ height: 100%;
   padding: 30px 20px 20px 30px;
 }
 
+.rhap_progress-section > * {
+  padding-top: 90px;
+}
 
 .rhap_main {
   padding: 0;
@@ -39,7 +42,7 @@ height: 100%;
 
 .rhap_container {
   backdrop-filter: blur(50px);
-  margin-left: -145px;
+  /* margin-left: -100px; */
 }
 
 .rhap_volume-controls {
@@ -48,15 +51,44 @@ height: 100%;
 .rhap_controls-section svg {
 color: white;
 background-color: black;
+
+}
+
+.rhap_current-time {
+  color: white;
+  background-color: black;
+  padding: 0;
+  margin-top: 88px;
+}
+.rhap_time {
+  padding: 0;
+  margin-top: 88px;
+  color: white;
+  background-color: black;
+}
+
+.relative-positioning {
+  position: relative;
+}
+
+.rhap_controls-section > * {
+  padding-bottom: 25px;
 }
 .rhap_progress-section {
   padding: 10px;
 }
 .title-song-player {
-  position: inline-block;
-  left: 435px;
-  z-index: 10;
+  position: absolute;
+  left: 20px;
+  z-index: 1;
   width: auto;
+  white-space: nowrap;
+  /* width: auto; */
+}
+
+
+.title-song-player-rel {
+  position: relative;
 }
 
 #title-p {
@@ -81,10 +113,11 @@ font-size: 15px;
   display: flex;
   flex-direction: row;
   justify-content: left;
+  position: relative;
 }
 .song-buttons button {
-  width: auto;
-  height: 20px;
+  /* width: auto; */
+  /* height: 20px; */
 }
 .comment-button-section {
   display: flex;
@@ -95,10 +128,34 @@ font-size: 15px;
 }
 
 .profile-dropdown {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: white;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* width: 100%; */
+  /* background-color: white; */
+  /* bottom: 1000px;
+   */
+   /* position: absolute; */
+/* padding-right: 500px; */
+/* margin-bottom: 500px; */
+
+position: absolute;
+background-color: #f1f1f1;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 50000;
+}
+
+.profile-dropdown > button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  z-index: 5;
+}
+
+.dropdown-more {
+  position: relative;
+  display: inline-block;
 }
 
 .menu {
@@ -172,3 +229,18 @@ font-size: 15px;
   width: 87.7%;
   height: 50%;
 }
+
+
+
+/* .profile-dropdown {
+  position: absolute;
+  width: 120px;
+  left: 492px;
+  top: 530px;
+  z-index: 10;
+} */
+
+/* .profile-dropdown button {
+  width: 100%;
+  font-size: 10px;
+} */

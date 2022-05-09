@@ -27,7 +27,7 @@ const AddToPlaylistModal = ({ playModal, setPlayModal }) => {
         backgroundClick();
       }}
     >
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal" id="playlist-modal" onClick={(e) => e.stopPropagation()}>
         <nav>
           <h3>
             <button
@@ -64,9 +64,7 @@ const AddToPlaylistModal = ({ playModal, setPlayModal }) => {
           setShowPlaylist={setShowPlaylist}
           showPlaylist={showPlaylist}
         />
-        <button hidden={showForm} onClick={(e) => goToPlaylist()}>
-          Go to playlist
-        </button>
+
       </div>
     </div>
   );

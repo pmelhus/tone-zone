@@ -60,6 +60,7 @@ const songDate = (date) => {
                   </div>
                   <AudioPlayer
                     className="audio-player"
+                    id="songs-audio-player"
                     src={song.url}
                     onPlay={(e) => console.log("onPlay")}
                     // other props here

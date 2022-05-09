@@ -3,13 +3,13 @@
   /* margin-right: 50px; */
   background-color: white;
   outline: none;
-  position: fixed;
+  position: absolute;
   min-height: auto;
-  top: 29px;
+  bottom: -66px;
   border: 1px solid gray;
 display: block;
 /* width: 40px; */
-left: 1446px;
+left: 18px;
 padding: 0;
 }
 
@@ -24,6 +24,10 @@ padding: 0;
 
 #profile-dropdown-nav li p {
   color: gray;
+}
+
+.dropdown-container {
+  position: relative;
 }
 
 .menu {

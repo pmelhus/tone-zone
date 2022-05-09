@@ -35,6 +35,8 @@
   display: block;
   flex: 1;
   padding: 6px;
+  position: absolute;
+  z-index: 4;
 }
 .image-content {
   margin-right: 15px;
@@ -44,6 +46,7 @@
   height: auto;
   /* box-shadow: 2px 2px 3px 1px rgb(104, 45, 7); */
 }
+
 
 #username {
   color: #999
@@ -59,6 +62,7 @@
 
 
 .audio-player {
+
   margin-bottom: 10px;
   width: 100%;
 }
@@ -122,3 +126,8 @@ a {
   margin: 0;
 }
 
+.rhap_controls-section button svg {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.924);
+  border-radius: 10px;
+  }

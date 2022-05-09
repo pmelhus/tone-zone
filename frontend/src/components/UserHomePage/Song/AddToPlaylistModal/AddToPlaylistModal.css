@@ -2,3 +2,25 @@ button {
   width: auto;
   height: auto;
 }
+/* 
+#playlist-modal {
+  width: 100px;
+} */
+
+
+
+#playlist-modal > nav > h3 > button{
+  border-color: #f50;
+  border: none;
+  border-bottom: .5px solid #f50;
+  color: #f50;
+  cursor: default;
+  margin-bottom: 20px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+#playlist-modal > nav {
+  display: flex;
+  margin-top: -30px;
+}

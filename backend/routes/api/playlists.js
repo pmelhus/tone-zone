@@ -55,17 +55,21 @@ router.post(
     const { title, song, user } = req.body;
     const userId = user.id;
     // console.log(url)
+    const imageUrl = song.imageUrl
 
     const playlist = await Playlist.create({
       title,
       userId,
+      imageUrl
     });
     const songId = song.id;
     const playlistId = playlist.id;
+    // console.log(song, '===============SONG')
 
     await SongPlaylist.create({
       playlistId,
-      songId,
+      songId
+
     });
 
     return res.json({
