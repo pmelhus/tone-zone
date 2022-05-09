@@ -12,7 +12,7 @@ const [proPlayLoaded, setProPlayLoaded] = useState(false)
   return (
     <>
       <div className="profile-page-main">
-        <h2>{sessionUser.username}</h2>
+        {/* <h2>{sessionUser.username}</h2> */}
 
         <NavLink hidden={proPlayLoaded} to={`/${sessionUser.username}/tracks`}>Tracks</NavLink>
         <NavLink hidden={proPlayLoaded} to={`/${sessionUser.username}/playlists`}>Playlists</NavLink>

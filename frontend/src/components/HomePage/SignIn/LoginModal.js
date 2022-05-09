@@ -13,7 +13,7 @@ const LoginModal = ({ visible, setVisible }) => {
   const [errors, setErrors] = useState([]);
 
   let history = useHistory();
-  if (sessionUser) return <Redirect to="/discover" />;
+  // if (sessionUser) return <Redirect to="/discover" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,10 +21,12 @@ const LoginModal = ({ visible, setVisible }) => {
     dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+        // console.log(data, "===========DATA")
+        if (data && data.errors) {
+          setErrors(data.errors)};
       }
     );
-    if (!errors) history.push("/discovery");
+    if (!errors) return history.push("/discover");
   };
 
   const demo = (e) => {
@@ -33,11 +35,11 @@ const LoginModal = ({ visible, setVisible }) => {
 
     dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
-        const data = await res.json();
+        const data = await res.json()
         if (data && data.errors) setErrors(data.errors);
       }
     );
-    history.push("/discover");
+    return history.push("/discover");
     // return <Redirect to="/discover"/>
   };
 

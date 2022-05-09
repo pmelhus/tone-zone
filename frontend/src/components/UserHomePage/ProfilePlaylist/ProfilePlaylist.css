@@ -1,0 +1,18 @@
+.playlist-title-username-song {
+position: absolute;
+z-index: 5;
+margin-left: 20px;
+margin-top: 10px;
+}
+
+.relative {
+  position: relative;
+}
+
+#playlist-img {
+position: absolute;
+}
+
+#playlist-player {
+  
+}

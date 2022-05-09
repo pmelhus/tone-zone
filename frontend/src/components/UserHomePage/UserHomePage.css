@@ -3,7 +3,8 @@
   width: 1180px;
   /* padding: 0 30px; */
   margin-top: 34px;
-  height: 1550px;
+  min-height: 1000px;
   background-color: white;
   padding: 20px;
+  /* overflow-y: scroll; */
 }

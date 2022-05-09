@@ -12,9 +12,9 @@ const Library = () => {
         {/* <Route path="/you/library/overview">
           <Overview />
         </Route> */}
-        <Route path="/you/library/likes">
+        {/* <Route path="/you/library/likes">
           <Likes />
-        </Route>
+        </Route> */}
         <Route path="/you/library/playlists">
           <Playlists />
         </Route>

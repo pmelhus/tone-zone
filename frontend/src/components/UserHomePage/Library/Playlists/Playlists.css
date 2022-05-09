@@ -1,0 +1,16 @@
+.playlists-container > p {
+  padding-left: 10px;
+  font-size: 14px;
+  color: #999;
+  width: 1200px;
+
+}
+
+.playlist-image {
+  width: 160px;
+  height: 160px;
+}
+
+.playlist-cards li {
+float: left;
+}

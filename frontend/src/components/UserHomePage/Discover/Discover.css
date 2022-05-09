@@ -1,0 +1,9 @@
+.discover-container {
+  display: flex;
+  flex-wrap: wrap;
+ /* margin-bottom: 50px; */
+}
+
+.playlist-container {
+  overflow-x: scroll;
+}

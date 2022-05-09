@@ -1,0 +1,60 @@
+.create-submit-container > form {
+  display: block;
+  margin-top: 10;
+margin-bottom: -10px;
+}
+
+.input-flex {
+display: block;
+padding-top: 10px;
+}
+
+.input-flex >label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.button-row > input {
+  position: relative;
+  height: 20px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.real-button-row {
+  display: flex;
+  width: 100%;
+  justify-content: right;
+}
+
+.real-button-row > button {
+
+  height: 25px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.create-submit-container {
+  height: 300px;
+}
+
+.song-create-playlist {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  border: 1px solid #f2f2f2;
+  margin-top: 10px;
+
+}
+
+.song-create-playlist > p {
+  margin: 0;
+  padding-left: 10px;
+}

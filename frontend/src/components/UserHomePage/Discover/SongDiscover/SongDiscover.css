@@ -1,0 +1,22 @@
+.playlist-card {
+  padding-left: 10px;
+  width: 180px;
+  padding: 50px 0;
+}
+
+/* .playlists-container {
+  padding-top: 25px;
+
+
+  /* padding-left: 10px; */
+.playlist-image a {
+ font-size: 12px;
+ padding: 0;
+ margin: 0;
+ text-decoration: none;
+}
+
+.playlist-card p {
+  padding: 0;
+  margin: 0;
+}

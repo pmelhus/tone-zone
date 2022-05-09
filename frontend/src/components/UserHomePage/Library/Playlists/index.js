@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Playlist from "./Playlist";
 import { getAllPlaylists } from "../../../../store/playlists";
+import "./Playlists.css";
 
 const Playlists = () => {
   const dispatch = useDispatch();
@@ -13,16 +14,24 @@ const Playlists = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      {playlists && playlists.map((playlist) => {
-        if (playlist.userId===sessionUser.id)
-        return (
-          <>
-            <Playlist playlist={playlist} />
-          </>
-        );
-      })}
-    </div>
+    <>
+      <p>Hear your own playlists:</p>
+      <div className="playlists-container">
+        <ul className="playlist-cards">
+          {playlists &&
+            playlists.map((playlist) => {
+              if (playlist.userId === sessionUser.id)
+                return (
+                  <>
+                    <li>
+                      <Playlist playlist={playlist} />
+                    </li>
+                  </>
+                );
+            })}
+        </ul>
+      </div>
+    </>
   );
 };
 

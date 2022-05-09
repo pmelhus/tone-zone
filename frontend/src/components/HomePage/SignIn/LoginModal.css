@@ -22,7 +22,7 @@ margin: 0 auto;
   top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  padding: 30px;
 
 
 }
@@ -73,11 +73,19 @@ button {
   width: 43%;
 }
 
+.login-form-ul > ul {
+  z-index: 10px;
+}
+
+input {
+  width: 150px;
+}
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: -25px;
+  padding: 30px;
 }
 
 .username-div {

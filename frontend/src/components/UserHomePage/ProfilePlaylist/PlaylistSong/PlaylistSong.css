@@ -14,3 +14,29 @@
   box-sizing: border-box; */
   /* transition: opacity .2s linear; */
 /* } */
+
+
+.button-set-url {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  border: .5px solid gray;
+  align-items: center;
+
+}
+
+.button-set-url button {
+  padding: 0;
+  margin: 0;
+  height: 40px;
+  width: 100px;
+
+}
+
+#playlist-song {
+  border: none;
+  white-space: nowrap;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+}

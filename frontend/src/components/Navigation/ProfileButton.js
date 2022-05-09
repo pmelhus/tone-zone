@@ -50,11 +50,6 @@ function ProfileButton() {
         <div className='dropdown-container'>
         <ul id="profile-dropdown-nav">
           <li>
-            <NavLink to={`/${user.username}`}>
-              <button>Profile</button>
-            </NavLink>
-          </li>
-          <li>
             <button onClick={logout}>Log Out</button>
           </li>
         </ul>

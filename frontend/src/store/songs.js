@@ -33,13 +33,16 @@ const deleteSong = (song) => ({
   song,
 });
 
+
+
+
 export const getAllSongs = () => async (dispatch) => {
   // console.log('================')
   const res = await fetch("/api/songs");
   if (res.ok) {
     const songs = await res.json();
     // console.log(list)
-    // console.log(data)
+    console.log(songs, "===========")
     dispatch(getSongs(songs));
   } else {
     throw res;
@@ -163,20 +166,25 @@ export const deleteOneSong = (data) => async (dispatch) => {
   dispatch(deleteSong(song));
 };
 
-const initialState = {};
+const initialState = {list: []};
 
-// const sortList = (list) => {
-//   return list.sort((songA, songB) => {
-//     return songA.id - songB.id;
-//   }).map((song) => song.id);
-// };
+const sortList = (list) => {
+
+  return list.sort((songA, songB) => {
+    const songDate = (date) => new Date(date)
+    return songDate(songB.createdAt) - songDate(songA.createdAt);
+  }).map((song) =>{
+     return song
+    });
+};
+
 
 const songReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const newState = { ...state };
-      action.songs.forEach((song) => (newState[song.id] = song));
-      return newState;
+      const allSongs = {}
+      action.songs.forEach((song) => (allSongs[song.id] = song));
+      return { ...allSongs, ...state, list: sortList(action.songs) };
     }
     case ADD_ONE: {
       if (!state[action.song.id]) {

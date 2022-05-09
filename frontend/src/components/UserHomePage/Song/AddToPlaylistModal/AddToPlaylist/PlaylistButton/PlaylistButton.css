@@ -1,0 +1,37 @@
+.playlist-card-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: .5px solid rgb(207, 204, 204);
+}
+.playlist-card-button > button {
+  width: 100px;
+  font-size: 11px;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#playlist-modal {
+width: 450px;
+height: 300px;
+overflow-y: scroll;
+}
+
+.avatar-playlist {
+  width: 50px;
+  height: 50px;
+}
+
+.playlist-image-title {
+  display: flex;
+  padding: 10px 0;
+}
+
+.playlist-image-title > p {
+  margin-left: 5px;
+  padding: 0;
+}

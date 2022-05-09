@@ -43,11 +43,6 @@ function Navigation({ isLoaded, sessionUser }) {
                 <a>Upload</a>
               </NavLink>
             </div>
-            <div>
-              <NavLink to={`/${sessionUser.username}`}>
-                <a>Profile</a>
-              </NavLink>
-            </div>
             <div>{isLoaded && sessionLinks}</div>
           </div>
         </nav>
