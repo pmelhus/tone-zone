@@ -18,8 +18,7 @@ router.get(
   "/",
   asyncHandler(async function (req, res) {
     const allSongs = await Song.findAll({
-      include: User,
-      Comment,
+      include: User
     });
     // const comments = await Comment.findAll({ where: { songId: id } });
     // console.log(allSongs);
@@ -35,7 +34,7 @@ router.get(
       include: User,
     });
 
-    return res.json(song, comments);
+    return res.json(song);
   })
 );
 
@@ -93,6 +92,7 @@ router.delete(
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const song = await Song.findByPk(id);
+   
     await song.destroy();
     return res.json(song);
   })

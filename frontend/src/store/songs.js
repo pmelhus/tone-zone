@@ -106,7 +106,7 @@ console.log(files[i])
     dispatch(addOneSong(song, song.user));
   } catch (error) {
 
-    console.log(error, '=-=================')
+    // console.log(error, '=-=================')
     throw error;
   }
 };

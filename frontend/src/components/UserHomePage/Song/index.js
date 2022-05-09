@@ -20,7 +20,7 @@ const Song = () => {
   const [showMenu, setShowMenu] = useState(false);
   const song = useSelector((state) => state.songs[songId]);
   const user = useSelector((state) => state.session.user);
-  console.log(song);
+  // console.log(song);
   useEffect(() => {
     dispatch(getOneSong(songId));
   }, [dispatch]);

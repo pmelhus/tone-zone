@@ -23,10 +23,11 @@ const LoginModal = ({ visible, setVisible }) => {
         const data = await res.json();
         // console.log(data, "===========DATA")
         if (data && data.errors) {
-          setErrors(data.errors)};
+          setErrors(data.errors);
+        }
       }
     );
-    if (!errors) return history.push("/discover");
+    return history.push("/discover");
   };
 
   const demo = (e) => {
@@ -35,7 +36,7 @@ const LoginModal = ({ visible, setVisible }) => {
 
     dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
-        const data = await res.json()
+        const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       }
     );

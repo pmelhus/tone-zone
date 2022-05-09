@@ -125,6 +125,7 @@ font-size: 15px;
   justify-content: left;
   align-items: left;
   height: 100px;
+  margin-bottom: 0;
 }
 
 .profile-dropdown {
@@ -226,7 +227,7 @@ z-index: 50000;
 
 .avatar-comment-description {
   position: relative;
-  margin-top: 0px;
+  margin-top: 60px;
   width: 87.7%;
   height: 50%;
 }

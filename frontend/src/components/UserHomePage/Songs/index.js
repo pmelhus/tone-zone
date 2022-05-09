@@ -72,7 +72,7 @@ const songDate = (date) => {
                         handleSubmit(e, song);
                       }}
                     >
-                      <button>Delete</button>
+                      {/* <button>Delete</button> */}
                     </form>
                   )}
                   </div>
