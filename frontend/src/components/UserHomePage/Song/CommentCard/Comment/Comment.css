@@ -1,0 +1,47 @@
+.edit-button-div {
+  display: flex;
+  border-bottom: .5px solid rgb(225, 224, 224);
+  padding-bottom: 4px;
+  padding: 10px 0;
+}
+
+.edit-button-div img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+
+.username-body {
+display: flex;
+flex: 1 0;
+flex-direction: column;
+margin-right: 10px;
+}
+
+.username-body p {
+  margin: 0;
+  padding-left: 10px;
+  padding-top: 2px;
+}
+
+.username-comment {
+  color: #999;
+}
+
+.trash-time {
+  display: flex;
+  align-items: top;
+}
+
+.username-comment {
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  /* display: inline; */
+}
+
+.trash-time button {
+position: absolute;
+left: 940px;
+}

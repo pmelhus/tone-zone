@@ -3,28 +3,89 @@
   justify-content: center;
   box-shadow: 2px 2px 3px 1px rgb(104, 45, 7); */
   height: auto;
+  margin-bottom: 36px;
 }
 
+.songs-content > p {
+  margin-bottom: 25px;
+}
+
+.audio-content {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.image-content > img {
+  width: 160px;
+  height: 160px;
+}
+
+#hear-latest {
+  color: #999;
+  font-size: 18px;
+  font-weight: 100;
+}
+
+#time {
+  color: gray;
+}
+
+.title-div {
+  display: block;
+  flex: 1;
+  padding: 6px;
+}
+.image-content {
+  margin-right: 15px;
+}
 .song-card {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: auto;
-  box-shadow: 2px 2px 3px 1px rgb(104, 45, 7);
+  /* box-shadow: 2px 2px 3px 1px rgb(104, 45, 7); */
 }
 
+#username {
+  color: #999
+}
+
+#song-title {
+  color: #333;
+}
+
+.audio-player-div {
+  width: 100%;
+}
+
+
 .audio-player {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .text-content {
   width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: left;
-  margin-left: 30px;
+  /* margin-left: 30px; */
+  align-items: center;
+  margin-bottom: 12px;
+
+}
+
+.text-content > a {
+  font-size: 12px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.text-content > img {
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 }
 
 .comment-card {
@@ -35,3 +96,29 @@ form > button {
   position: relative;
   margin-top: 40px;
 }
+
+li{
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.buttons {
+  display:flex;
+  justify-content: left;
+}
+
+.delete-button > button {
+  margin: 0;
+  font-size: 11px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.delete-button {
+  margin: 0;
+}
+

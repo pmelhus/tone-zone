@@ -3,15 +3,56 @@
   display: flex;
   flex-direction: row;
   justify-content: left;
+  width: 100%;
 }
+.comment-textarea {
 
+  width: 100%;
+  margin: 8px 0;
+  margin-bottom: 10px;
+
+}
 .comment-textarea button {
   margin: 0;
-  width: auto;
+  margin-top: -8px;
+  min-width: 31px;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+  vertical-align: center;
+  height: 26px;
+  display: inline-block;
+  position: relative;
+  font-size: 14px;
+  bottom: -5px;
+}
+
+.comment-body {
+  width: 100%;
+  height: 20px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+}
+
+.comment-body-text {
+  width: 80%;
+  height: 40px;
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+}
+
+.comment-body-text > textarea {
+  width: 100%;
+  height: 16px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 100;
 
 }
 
-.comment-textarea textarea {
-  width: 500px;
-  height: 20px;
+.error-message {
+  position: absolute;
+  right: 1140px;
 }

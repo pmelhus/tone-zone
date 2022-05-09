@@ -19,7 +19,8 @@ const Song = () => {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const song = useSelector((state) => state.songs[songId]);
-console.log(song)
+  const user = useSelector((state) => state.session.user);
+  console.log(song);
   useEffect(() => {
     dispatch(getOneSong(songId));
   }, [dispatch]);
@@ -38,7 +39,7 @@ console.log(song)
   const openMenu = (e) => {
     e.stopPropagation();
     if (showMenu) return;
-    setShowMenu(true);
+    setShowMenu(!showMenu);
   };
 
   useEffect(() => {
@@ -56,18 +57,28 @@ console.log(song)
   return (
     <div className="song-content">
       {song && (
-        <div>
-          <div className="song-player">
-            <img src={song?.imageUrl}></img>
-            <h2>
-              {song?.title} <br></br> {song?.User?.username}
-            </h2>
+        <>
+          <div
+            className="audio-and-image"
+            style={{ backgroundImage: `url("${song.imageUrl}")` }}
+          >
+            <div className="song-player">
+              <div className="title-song-player">
+                <p id="title-p">{song?.title}</p>
+                <p id="username-p">{song?.User?.username}</p>
+              </div>
 
-            <AudioPlayer
-              src={songId?.url}
-              onPlay={(e) => console.log("onPlay")}
-              // other props here
-            />
+              <AudioPlayer
+                className="audio-player"
+                src={song?.url}
+                onPlay={(e) => console.log("onPlay")}
+                style={{ backgroundImage: `url("${song.imageUrl}")` }}
+              />
+
+              <div className="img-div">
+                <img src={song?.imageUrl}></img>
+              </div>
+            </div>
           </div>
           <div className="comment-button-section">
             <WriteComment song={song} />
@@ -78,8 +89,12 @@ console.log(song)
               >
                 Edit
               </button>
-              <button onClick={handleDelete}>Delete</button>
-              <button onClick={(e) => openMenu(e)}>More</button>
+              {user.id === song.User.id && (
+                <button onClick={handleDelete}>Delete</button>
+              )}
+              <button onClick={(e) => openMenu(e)}>
+                <i class="fa-solid fa-ellipsis"></i>More
+              </button>
               {showMenu && (
                 <ul className="profile-dropdown">
                   <li>
@@ -90,27 +105,35 @@ console.log(song)
                 </ul>
               )}
             </div>
-            <div className="song-description">
-              <h3>Description</h3>
-              <p>{song?.description}</p>
+          </div>
+          <div className="avatar-comment-description">
+            <div className="song-page-avatar">
+              <img src={song.User.profileImageUrl}></img>
+              <p>{song.User.username}</p>
             </div>
-            <CommentCard song={song} />
-            <div>
-              <EditModal
-                title={song.title}
-                description={song.description}
-                visible={signInToggle}
-                setVisible={setSignInToggle}
-              />
-            </div>
-            <div>
-              <AddToPlaylistModal
-                playModal={playModal}
-                setPlayModal={setPlayModal}
-              />
+            <div className="comment-body-description">
+              <div className="song-description">
+                <h3>Description</h3>
+                <p>{song?.description}</p>
+              </div>
+              <CommentCard song={song} />
+              <div>
+                <EditModal
+                  title={song.title}
+                  description={song.description}
+                  visible={signInToggle}
+                  setVisible={setSignInToggle}
+                />
+              </div>
+              <div>
+                <AddToPlaylistModal
+                  playModal={playModal}
+                  setPlayModal={setPlayModal}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

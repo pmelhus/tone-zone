@@ -10,6 +10,12 @@ import "./Songs.css";
 const Songs = ({ sessionUser }) => {
   const dispatch = useDispatch();
   const songList = useSelector((state) => Object.values(state.songs));
+const dateNow = new Date()
+
+
+const songDate = (date) => {
+  return new Date(date)
+}
 
   useEffect(() => {
     dispatch(getAllSongs());
@@ -21,30 +27,56 @@ const Songs = ({ sessionUser }) => {
   };
   return (
     <div className="songs-content">
+      <p id="hear-latest">Hear the latest posts in the community:</p>
       {songList &&
         songList.map((song) => {
           return (
             <div className="song-card">
               <div className="text-content">
-                <h2>
-                  <Link to={`/stream/${song.id}`}>{song.title}</Link>
-                  <span> </span>by {song.User?.username}
-                </h2>
-                <p>{song.description}</p>
+                <img
+                  src={song?.User?.profileImageUrl}
+                  href={`/${song?.User?.username}`}
+                ></img>
+                <a href={`/${song?.User?.username}`}>{song.User?.username}</a>
+
+                <p id='time'>&nbsp;posted a track at { songDate(song.createdAt).toLocaleTimeString().split(' ')[0].split(':').splice(0, 2).join(':') + ' ' + songDate(song.createdAt).toLocaleTimeString().split(' ')[1]} on {
+            songDate(song.createdAt).toLocaleDateString()
+                } </p>
               </div>
-              <AudioPlayer
-                className="audio-player"
-                src={song.url}
-                onPlay={(e) => console.log("onPlay")}
-                // other props here
-              />
-              <form
-                onSubmit={(e) => {
-                  handleSubmit(e, song);
-                }}
-              >
-                <button>Delete</button>
-              </form>
+              <div className="audio-content">
+                <div className="image-content">
+                  <img src={song?.imageUrl} />
+                </div>
+                <div className="audio-player-div">
+                  <div className="title-div">
+                    <div>
+                      <a href={`/${song?.User?.username}`} id="username">
+                        {song.User?.username}
+                      </a>
+                    </div>
+                    <div>
+                      <a href={`/stream/${song.id}`} id="song-title">{song.title}</a>
+                    </div>
+                  </div>
+                  <AudioPlayer
+                    className="audio-player"
+                    src={song.url}
+                    onPlay={(e) => console.log("onPlay")}
+                    // other props here
+                  />
+                  <div className='buttons'>
+                  {sessionUser && (
+                    <form className="delete-button"
+                      onSubmit={(e) => {
+                        handleSubmit(e, song);
+                      }}
+                    >
+                      <button>Delete</button>
+                    </form>
+                  )}
+                  </div>
+                </div>
+              </div>
             </div>
           );
         })}

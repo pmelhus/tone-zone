@@ -7,7 +7,7 @@ import {
   updateComment,
 } from "../../../../store/comments";
 import "./CommentCard.css";
-import Comment from "./Comment"
+import Comment from "./Comment";
 
 const CommentCard = ({ song }) => {
   const dispatch = useDispatch();
@@ -27,14 +27,15 @@ const CommentCard = ({ song }) => {
 
   return (
     <>
-      <div className='comment-content'>
-
+      <p className="comment-count">
+        <i class="fa-solid fa-message"></i>
+        {commentListFiltered.length} comments
+      </p>
+      <div className="comment-content">
         <div className="comment-body">
           {commentListFiltered &&
             commentListFiltered.map((comment) => {
-              return (
-                <Comment key={comment.id} comment={comment}/>
-              );
+              return <Comment key={comment.id} comment={comment} />;
             })}
         </div>
       </div>

@@ -1,38 +1,53 @@
 header {
 /* display: block; */
 width: 100%;
+min-width: auto;
 background: #333;
 /* transition: height .2s; */
 position: fixed;
+padding: 0;
 /* z-index: 100; */
-margin: 0;
+margin: 0 auto;
 top: 0;
-z-index: 3000;
+z-index: 30;
 }
 
 .nav-div {
-  display: flex;
-  justify-content: space-evenly;
-  width: 1180px;
+
+  width: 1240px;
   margin: 0 auto;
 }
 
-nav {
+#logo {
+  color: white;
+  z-index: 3400;
+margin-top: 9px;
+margin-left: -15px;
+margin-right: 10px;
+}
+
+.nav-main {
   width: 100%;
+
   display: flex;
   justify-content: space-between;
 }
 
-ul {
+.ul-nav {
   width: 33%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: left;
+}
+
+.ul-nav li {
+  padding: 0 30px;
 }
 
 .nav-div a {
   color: white;
 
 }
+
 
 .profile-button {
   display: flex;

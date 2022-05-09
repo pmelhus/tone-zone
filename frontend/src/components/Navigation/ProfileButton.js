@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../store/session";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, NavLink } from "react-router-dom";
 import "./ProfileButton.css";
 
-function ProfileButton({ sessionUser }) {
+function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   let history = useHistory();
-  // const user = useSelector(state => state.session.user)
+  const user = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   // console.log(user)
 
@@ -42,17 +42,17 @@ function ProfileButton({ sessionUser }) {
 
   return (
     <div className="menu">
-      <button onClick={openMenu}>
-        <img
-          className="avatar"
-          src={isLoaded && sessionUser?.profileImageUrl}
-        ></img>
-        <i className="fas fa-user-circle" />
+      <button className="menu-button" onClick={openMenu}>
+        <img className="avatar" src={isLoaded && user?.profileImageUrl} />
+        <p className="username">{user.username}</p>
       </button>
       {showMenu && (
-        <ul className="profile-dropdown">
-          <li>{sessionUser?.username}</li>
-          <li>{sessionUser?.email}</li>
+        <ul id="profile-dropdown-nav">
+          <li>
+            <NavLink to={`/${user.username}`}>
+              <button>Profile</button>
+            </NavLink>
+          </li>
           <li>
             <button onClick={logout}>Log Out</button>
           </li>

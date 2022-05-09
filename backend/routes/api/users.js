@@ -17,7 +17,7 @@ router.post(
     const user = await User.signup({ email, username, password, profileImageUrl });
 
     await setTokenCookie(res, user);
-// console.log(user, 'YAAAAAAAAAAA')
+console.log(user, 'YAAAAAAAAAAA')
     return res.json({
       user
     });

@@ -51,18 +51,30 @@ const WriteComment = ({ song }) => {
     setBody(e.target.value);
   };
   return (
-    <div className="comment-textarea">
+    <>
       <ErrorMessage message={errorMessages.overall} />
-      <form onSubmit={(e) => handleClick(e)}>
-        <textarea
-          placeholder="Write a comment!"
-          onChange={updateBody}
-          value={body}
-        ></textarea>
-        <button>Submit</button>
-        <ErrorMessage label={"Error"} message={errorMessages.body} />
-      </form>
-    </div>
+      <div className="comment-textarea">
+        <form onSubmit={(e) => handleClick(e)}>
+          <img
+            className="comment-avatar"
+            src={session.user.profileImageUrl}
+          ></img>
+          <div className="comment-body-text">
+            <textarea
+              placeholder="Write a comment"
+              onChange={updateBody}
+              value={body}
+            ></textarea>
+          </div>
+          <button>Submit</button>
+        </form>
+      </div>
+      <ErrorMessage
+        className="error-message"
+        label={"Error"}
+        message={errorMessages.body}
+      />
+    </>
   );
 };
 

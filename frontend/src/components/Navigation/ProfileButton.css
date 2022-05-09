@@ -1,18 +1,33 @@
-.profile-dropdown {
-  width: 10px;
-  margin-right: 50px;
+#profile-dropdown-nav {
+  width: 135px;
+  /* margin-right: 50px; */
   background-color: white;
-  position:absolute;
-  height: 20px;
+  outline: none;
+  position: fixed;
+  min-height: auto;
+  top: 29px;
+  border: 1px solid gray;
+display: block;
+/* width: 40px; */
+left: 1446px;
+padding: 0;
+}
 
+#profile-dropdown-nav button {
+  margin: 0;
+  padding: 0;
+}
+
+#profile-dropdown-nav li {
+  display: list-item;
+}
+
+#profile-dropdown-nav li p {
+  color: gray;
 }
 
 .menu {
-  width: 50px;
-
-
-  /* align-items: right; */
-  /* justify-content: right; */
+  width:50px;
 }
 
 .avatar {
@@ -20,7 +35,27 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  position: relative;
-  /* display:inline-block; */
+  /* position: relative; */
 
+}
+
+.menu-button {
+  display: flex;
+  justify-content: left;
+  align-items: top;
+height: 30px;
+color: white;
+border: none;
+
+
+}
+
+
+
+.username {
+  padding: 0;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  padding-left: 2px;
 }
