@@ -16,18 +16,19 @@ const LoginModal = ({ visible, setVisible }) => {
   // if (sessionUser) return <Redirect to="/discover" />;
 
   const handleSubmit = (e) => {
+    console.log(credential, password)
     e.preventDefault();
     setErrors([]);
-    dispatch(sessionActions.login({ credential, password })).catch(
+
+    return dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
-        // console.log(data, "===========DATA")
         if (data && data.errors) {
           setErrors(data.errors);
         }
+        // if (res.ok) history.push("/discover");
       }
     );
-    return history.push("/discover");
   };
 
   const demo = (e) => {
@@ -40,7 +41,8 @@ const LoginModal = ({ visible, setVisible }) => {
         if (data && data.errors) setErrors(data.errors);
       }
     );
-    return history.push("/discover");
+    if (!errors) history.push("/discover");
+    // return history.push("/discover");
     // return <Redirect to="/discover"/>
   };
 

@@ -72,7 +72,7 @@ app.use((err, _req, res, _next) => {
     errors: err.errors,
     stack: isProduction ? null : err.stack,
   });
-  // console.log(err)
+  console.log(err)
 });
 
 module.exports = app;

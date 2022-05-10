@@ -27,6 +27,7 @@ export const login = (user) => async (dispatch) => {
       password,
     }),
   });
+  console.log('=========================')
   const data = await response.json();
   // console.log(data, '============= validations')
   dispatch(setUser(data.user));
@@ -39,7 +40,6 @@ const initialState = { user: null };
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
-  // await console.log(data, '=========================')
   dispatch(setUser(data.user));
   return response;
 };

@@ -89,7 +89,6 @@ const multipleMulterUpload = (nameOfKey) =>
   multer({ storage: storage }).array(nameOfKey)
 
 
-
 module.exports = {
   s3,
   singlePublicFileUpload,

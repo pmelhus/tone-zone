@@ -202,7 +202,6 @@ const songReducer = (state = initialState, action) => {
     }
     case GET_ONE: {
       const newState = { ...state, [action.song.id]: action.song };
-
       return newState;
     }
     case UPDATE: {
